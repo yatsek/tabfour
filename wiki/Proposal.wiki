@@ -1,0 +1,12 @@
+#summary Proposal due Oct. 8
+
+== Problem or Idea ==
+The problem description should be short and specific about the high-level goals of the project. It states what the problem is and why it is a problem or describes a new idea and why it will enhance an existing application or work practice. It should also drop a hint at the proposed solution to the problem. 
+
+
+== Analysis ==
+The analysis section should give more background for the problem or new idea. It doesn’t just focus on the negative aspects of the current situation, but also identifies some positive aspects that may be beneficial to retain. A few salient examples from existing systems or work practices should be used to support those claims. 
+
+
+== Suggested Improvements ==
+Here the proposal should propose specific changes to solve the problems or implement the new ideas described earlier and briefly explain why it is believed they will work. 
