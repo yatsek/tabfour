@@ -1,9 +1,9 @@
 #summary Homepage
 
 =Section 1=
-[Introduction]
-[Requirements]
-[Bibliography]
+[Introduction] <br> 
+[Requirements] <br>
+[Bibliography] 
 
 = Misc =
 [InterviewStructure]
