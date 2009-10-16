@@ -1,10 +1,16 @@
 #summary Homepage
 
-=Section 1=
+[TimeLine]
+
+=Section 1: Tasks and Requirements=
 [Introduction] <br> 
 [TaskExamples] <br>
 [Requirements] <br>
 [Bibliography] 
+
+=Section 2: Design Alternatives=
+
+=Section 3: Prototype, walkthrough, evaluation=
 
 = Misc =
 [InterviewStructure]
