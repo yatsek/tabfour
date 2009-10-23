@@ -1,6 +1,13 @@
 #summary Checklist of topics/ideas for semi-structured interviews.
 
 
+=Background=
+ * job
+ * familiarity with computers 
+ * amount of use of browser
+ * age / education
+
+
 =Browsing behaviour=
 Web Browser Tasks
  * To-do list
@@ -8,26 +15,41 @@ Web Browser Tasks
  * Frequently Used
  * Research Collection
 Work vs. School vs. Personal <br>
- 
+ * what types of pages visited?
+ * what tasks are they trying to achieve?
+ * are browsing pattens different?
 Search vs. autocomplete vs. creating structure<br>
-Perceived Problems with
+Perceived Problems with achieving these tasks
 
 
 =Existing Tools=
-Tabs<br>
+Which browser(s)?
+Tabs / Multiple Windows<br>
+ * how many tabs at once?
+ * patterns of behaviours opening/closing tabs?
+ * grouping of tabs?
+ * re-arranging into groups?
 Bookmarks<br>
- * last time bookmarked?
+ * last time something bookmarked?
  * what do you bookmark?
  * do you feel the bookmarks will be useful?
- * online bookmarks
+ * online bookmark sites or services?
  * why bookmark?
+ * how many bookmarks? how are they organized/grouped?
 History<br>
-"Quick Bookmarks" <- bookmarks toolbar<br>
+ * last time used history? 
+ * browse history or search?
+ * how do you sort history?
+"Quick Bookmarks" / bookmarks toolbar<br>
+ * what's there? 
+ * what size is the button? (Russ keeps short names or icons)
 AwesomeBar<br>
 Searching<br>
 Coping Mechanisms/Strategies<br>
 How many tabs?<br>
-
+Extensions / Addons
+ * Have they tried extensions?
+ * Have they continued to use them?
 
 =Sharing context with others=
 
