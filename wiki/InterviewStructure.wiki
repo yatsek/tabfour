@@ -10,10 +10,10 @@
 
 =Browsing behaviour=
 Web Browser Tasks
- * To-do list
- * Sharing
- * Frequently Used
- * Research Collection
+ * <b>To-do list</b>
+ * <b>Sharing</b>
+ * <b>Frequently Used</b>
+ * <b>Research Collection</b>
 Work vs. School vs. Personal <br>
  * what types of pages visited?
  * what tasks are they trying to achieve?
@@ -46,13 +46,17 @@ History<br>
 AwesomeBar<br>
 Searching<br>
 Coping Mechanisms/Strategies<br>
-How many tabs?<br>
+ * how do they achieve their needs (todo list, sharing, frequently used, research collection) with existing tools? do they use these tools in novel/unintended ways?
 Extensions / Addons
  * Have they tried extensions?
  * Have they continued to use them?
 
 =Sharing context with others=
-
+ * current strategies
+ * email? facebook? del.icio.us?
+ * share single pages vs. groups of pages
+ * how often want to share? how often actually share?
+ * give up on sharing b/c it's inconvenient?
 
 =Revisitation=
  * visit a specific page?<br>
