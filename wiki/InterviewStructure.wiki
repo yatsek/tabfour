@@ -7,31 +7,31 @@ Web Browser Tasks
  * Sharing
  * Frequently Used
  * Research Collection
-Work vs. School vs. Personal
+Work vs. School vs. Personal <br>
  
-Search vs. autocomplete vs. creating structure
+Search vs. autocomplete vs. creating structure<br>
 Perceived Problems with
 
 
 =Existing Tools=
-Tabs
-Bookmarks
- - last time bookmarked?
- - what do you bookmark?
- - do you feel the bookmarks will be useful?
- - online bookmarks
- - why bookmark?
-History
-"Quick Bookmarks" <- bookmarks toolbar
-AwesomeBar
-Searching
-Coping Mechanisms/Strategies
-How many tabs?
+Tabs<br>
+Bookmarks<br>
+ * last time bookmarked?
+ * what do you bookmark?
+ * do you feel the bookmarks will be useful?
+ * online bookmarks
+ * why bookmark?
+History<br>
+"Quick Bookmarks" <- bookmarks toolbar<br>
+AwesomeBar<br>
+Searching<br>
+Coping Mechanisms/Strategies<br>
+How many tabs?<br>
 
 
 =Sharing context with others=
 
 
 =Revisitation=
- - visit a specific page?
- - visit a group of pages?
+ * visit a specific page?<br>
+ * visit a group of pages?<br>
