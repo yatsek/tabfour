@@ -1,1 +1,37 @@
 #summary Checklist of topics/ideas for semi-structured interviews.
+
+
+=Browsing behaviour=
+Web Browser Tasks
+ * To-do list
+ * Sharing
+ * Frequently Used
+ * Research Collection
+Work vs. School vs. Personal
+ 
+Search vs. autocomplete vs. creating structure
+Perceived Problems with
+
+
+=Existing Tools=
+Tabs
+Bookmarks
+ - last time bookmarked?
+ - what do you bookmark?
+ - do you feel the bookmarks will be useful?
+ - online bookmarks
+ - why bookmark?
+History
+"Quick Bookmarks" <- bookmarks toolbar
+AwesomeBar
+Searching
+Coping Mechanisms/Strategies
+How many tabs?
+
+
+=Sharing context with others=
+
+
+=Revisitation=
+ - visit a specific page?
+ - visit a group of pages?
