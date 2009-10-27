@@ -1,1 +1,18 @@
 #summary Background, work contexts, etc.
+
+Background
+
+In this information age, managing information is more often a problem than collecting it. This problem of information overload is especially acute in the web domain. With more and more essential information going online and web pages turning into useful applications, users want them to be more easily accessible. A lot of work has been done on making web sites more usable: we intend to take a critical look at the usability of the web browser. Have the various elements of web browsers, such as tabs, bookmarks and history, scaled sufficiently to deal with the complexities of the new age? To a user who has hundreds of bookmarked web pages, how useful or usable is the concept of bookmarks? Are tabs a good model for a user who routinely has more than 13 pages [1] open ?
+Wouldn't it be nicer if the tabs, bookmarks and history, all representations of the same entity in different spatial/temporal forms, functioned as one seamless entity and the browser became transparent [Rutkowski (1982)] in aiding the user accomplish his task ?
+Reducing clutter using context and window management has evolved from single document interfaces through multiple document interfaces and currently to tabs. However, fueled by ever more powerful computers and the accelerating growth of the web, the number of concurrently open tabs seems to be steadily increasing for many users, and the current design of tabs in the browser often fails to handle the high level of ensuing complexity. Not all users are affected by this problem uniformly, though [1]. We will examine the tasks or circumstances which lead to this discrepancy. We expect that highly exploratory tasks such as 'background research' or literature review will lead to heavier tab usage, while focused tasks such as online banking will not. In summary, below are our background assumptions, our goals, and some issues we don't intend to address:
+
+Expected Types of Users
+
+
+Work Contexts
+
+
+What the system will be used for
+
+
+System Constraints
