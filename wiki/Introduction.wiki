@@ -3,16 +3,19 @@
 Background
 
 In this information age, managing information is more often a problem than collecting it. This problem of information overload is especially acute in the web domain. With more and more essential information going online and web pages turning into useful applications, users want them to be more easily accessible. A lot of work has been done on making web sites more usable: we intend to take a critical look at the usability of the web browser. Have the various elements of web browsers, such as tabs, bookmarks and history, scaled sufficiently to deal with the complexities of the new age? To a user who has hundreds of bookmarked web pages, how useful or usable is the concept of bookmarks? Are tabs a good model for a user who routinely has more than 13 pages [1] open ?
+
 Wouldn't it be nicer if the tabs, bookmarks and history, all representations of the same entity in different spatial/temporal forms, functioned as one seamless entity and the browser became transparent [Rutkowski (1982)] in aiding the user accomplish his task ?
-Reducing clutter using context and window management has evolved from single document interfaces through multiple document interfaces and currently to tabs. However, fueled by ever more powerful computers and the accelerating growth of the web, the number of concurrently open tabs seems to be steadily increasing for many users, and the current design of tabs in the browser often fails to handle the high level of ensuing complexity. Not all users are affected by this problem uniformly, though [1]. We will examine the tasks or circumstances which lead to this discrepancy. We expect that highly exploratory tasks such as 'background research' or literature review will lead to heavier tab usage, while focused tasks such as online banking will not. In summary, below are our background assumptions, our goals, and some issues we don't intend to address:
+
+Reducing clutter using context and window management has evolved from single document interfaces through multiple document interfaces and currently to tabs. However, fueled by ever more powerful computers and the accelerating growth of the web, the number of concurrently open tabs seems to be steadily increasing for many users, and the current design of tabs in the browser often fails to handle the high level of ensuing complexity. Not all users are affected by this problem uniformly, though [1]. We expect that highly exploratory tasks such as 'background research' or literature review will lead to heavier tab usage, while focused tasks such as online banking will not. In either case, we hope to introduce an task-focus interface that allows users to more easily organize their web browsing activities.
 
 Expected Types of Users
+We expect our system will benefit and be used by a large percentage of population who frequently browse through the Internet in their average daily live. However, for the purpose of simplifying our evaluation process, we chose to narrow down our target user group to a subset of the population whom are expert browser users, meaning they regularly utilize a combination of browser features to aid their navigation of the web, including multiple tabs, bookmarks and history.
 
-
-Work Contexts
-
+Work Context
+On a regular basis, users need to access the Internet to perform a variety of tasks, such as shopping, banking, browsing through medias and retrieving information in general. These tasks require using the browser to open up many different webpages that are of interest to the users. Depending on the behaviors and practices of the user, multiple windows and tabs could be opened simultaneous, making the browsing task complex and unmanageable.
 
 What the system will be used for
-
+Our system is intended to help users to organize tabs, bookmarks and histories when they would become unmanageable in the normal situations. The user can group tabs, bookmarks and histories together based on the tasks they are working on. Whenever they want to start a new task or is finished with one, they can create and delete tasks accordingly. We expect users would feel organizing browsing data to be a tedious task at the beginning but progresses to realize the ease of use and the increase of productivity of our interface.
 
 System Constraints
+To simulate a real-world usage environment for our evaluation phase, we hope to implement our system as a plug-in for the Mozilla Firefox Browser. And thus our ability to tweak the browser interface might be somewhat limited. More research and exploration are needed to understand the capabilities of the Firefox plug-in development API. Our system is also subjected to time constraint, preventing us to properly evaluate the interface in normal daily usage over a longer period of time, which can help us understand better users' behaviors and further our interface upon.
