@@ -20,11 +20,11 @@ We expect our system to be used and beneficial to a large percentage of computer
 
 Work Context
 
-On a regular basis, users need to access the Internet to perform a variety of tasks, such as shopping, banking, browsing through medias and retrieving information in general. Not all these tasks can potentially lead to cluttered and unmanageable tabs and bookmarks; for example, we expect that highly exploratory tasks such as 'background research' or literature review will lead to heavier tab usage, while focused tasks such as online banking will not. We hope to focus on a combination of tasks/work context in user's browsing activities that require a heavier usage of the web browser's organizational features. 
+On a regular basis, users need to access the Internet to perform a variety of tasks, such as shopping, banking, browsing through medias and retrieving information in general. Not all these tasks can potentially lead to cluttered and unmanageable tabs and bookmarks; for example, we expect that highly exploratory tasks such as 'background research' or literature review will lead to heavier tab usage, while focused tasks such as online banking will not. We hope to focus on a combination of tasks/work context in user's browsing activities that require a heavier usage of the web browser's organizational features.
 
 What the system will be used for
 
-Our system is intended to help users to organize tabs, bookmarks and histories when they would become unmanageable in the normal situations. The user can group tabs, bookmarks and histories together based on the tasks they are working on. Whenever they want to start a new task or is finished with one, they can create and delete tasks accordingly. We expect users would feel organizing browsing data to be a tedious task at the beginning but progresses to realize the ease of use and the increase of productivity of our interface.
+Our system is intended to be used for organizing tabs, bookmarks and histories when they would become unmanageable in the normal circumstances. The users can group tabs, bookmarks and histories together based on the tasks they are working on. Bookmark and history contents are generated on a per-task basis, and all contents associated with a task is cleared when the user finishes and deletes the task. We expect users would feel organizing browsing data in an explicit manner to be a tedious task at the beginning but progresses to realize the ease of use and the increase of productivity using our interface.
 
 System Constraints
 
