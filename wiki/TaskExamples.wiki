@@ -1,1 +1,17 @@
 #summary Home page for TaskExamples. Possibly link to each example on its own page.
+
+Concrete task examples. You will list at least 5-7 concrete task examples that has the properties listed in Appendix 1. Try to keep task descriptions short and to the point. Each task should be accompanied by a paragraph that describes the class of the expected user (eg, a typical customer), the relative importance of the task (e.g. frequently done and important, infrequently done but still important, rare and not important, etc), and whatever other nuances you feel should be included. Describe how the tasks were collected and validated.
+
+Researching on Literature (Billy)
+
+Undirected browsing (Russ)
+
+Sharing of jazz music videos
+
+Hibernation/Interruption (Tao)
+
+Russ's cousins
+
+Russ's cousins synchronizing smartphone/desktop
+
+Emailing link to yourself (Mohan)
