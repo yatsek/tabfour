@@ -12,3 +12,5 @@
 
 6    Task-focused Interface. Wikipedia.
         http://en.wikipedia.org/wiki/Task-focused_interface
+
+Jhaveri, N., & Raiha, K.J. The advantages of a cross-session web workspace. CHI 2005.
