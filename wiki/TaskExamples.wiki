@@ -2,9 +2,18 @@
 
 Concrete task examples. You will list at least 5-7 concrete task examples that has the properties listed in Appendix 1. Try to keep task descriptions short and to the point. Each task should be accompanied by a paragraph that describes the class of the expected user (eg, a typical customer), the relative importance of the task (e.g. frequently done and important, infrequently done but still important, rare and not important, etc), and whatever other nuances you feel should be included. Describe how the tasks were collected and validated.
 
-Researching on Literature (Billy)
+Task: Literature Research (Bill)
+Billy, a ECE Master student, is trying to find relevant literatures on large screen displays in preparing for his presentation in CS544. He opens up Google Scholar and types in the phrase ‘Large Screen Display’, and it returns numerous results. He opens up the papers that seems most relevant and spends his time reading them. Once in a while he goes off to check his emails and browses other websites, before he refocuses again on the literature search.
 
-The only history user! (Billy)
+Discussion
+The user represents a frequent and power computer user group who potentially represents a large portion of our target participants for our study. The task is frequent and important, as graduate students need to search through literatures for both their courses and research.
+
+Task: Finding Visited Page through History (Billy)
+Yang, a Chinese high school student, wants to find a Chinese comic series that he can read online. He is not proficient in typing in Chinese characters, and he remembers he browsed through some other Chinese comics last week. Instead of trying to type in the Chinese characters, he looks through his browser history to find the previous web pages he has visited and copies the Chinese characters from those web pages for his new search.
+
+Discussion
+The user represents a unique group that requires special character input into the browser. But the task of searching and location information through the browser history is common across most people. Though the task is not performed frequently, it could be critical when previous/lost information is needed to be located.
+
 
 Undirected browsing (Russ)
 
