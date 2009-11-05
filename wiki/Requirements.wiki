@@ -29,8 +29,9 @@ The system should support switching between contexts
 - Each context should be shown in a different icon/tab in the task bar.
 
 
-The system should support storing of contexts (as a single link?)
+The system should support storing of contexts (as a single link? hibernation?)
 - The user should be able to add/access a context to/from the quick toolbar?
+- The user should be able to only open selected artifacts in a context.
 
 The system should support sharing of contexts
 - The user should be able to share an entire context with other people or themselves (using one single link? file?)
