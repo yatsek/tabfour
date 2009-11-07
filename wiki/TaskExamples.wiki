@@ -36,6 +36,7 @@ Charles
 Sharing Links thru IM/Facebook? (Tao)
 
 Task: Open several pages each time browser starts (Tao)
+
 Jimmy is a first year undergraduate student at UBC, studying Engineering. Jimmy has just returned from school and had dinner with his family. He sits down in front of his computer and starts surfing the internet. Like everyday, Jimmy opens several websites from his bookmark collection at one time, including facebook, gmail, youtube, and some other news websites. He then reads the websites in detail one by one.
 
 Discussion:
