@@ -38,7 +38,7 @@ Sharing Links thru IM/Facebook? (Tao)
 
 Task: Open several pages each time browser starts (Tao)
 
-Jimmy is a first year undergraduate student at UBC, studying Engineering. Jimmy has just returned from school and had dinner with his family. He sits down in front of his computer and starts surfing the internet. Like everyday, now Jimmy wants to open several websites at one time, including facebook, gmail, youtube, and some other news websites. He then wants to read the websites in detail one by one.
+Jimmy is a first year undergraduate student at UBC, studying Engineering. Jimmy has just returned from school and had dinner with his family. He sits down in front of his computer and starts surfing the internet. Like everyday, now Jimmy wants to open several websites from his bookmark collection at one time, including facebook, gmail, youtube, and some other news websites. He then reads the websites in detail one by one.
 
 Discussion:
 The user represents a typical user group, they are computer users with average computer skill levels and use the internet frequently for entertainment and information acquisition. The task represents a typical default task which will be performed quite frequently for all groups of users. Many people tend to open a group of pages each time they start browsing the internet. We can call this the "home task" instead of the idea of home page in classical web browser.
