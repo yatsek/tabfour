@@ -4,6 +4,10 @@ Concrete task examples. You will list at least 5-7 concrete task examples that h
 
 ----
 
+These tasks were collected during semi-structured interviews. The reader is referred to the Interview Structure document for topic areas which were identified as relevant before the interviews took place. We met as a group several times throughout the interview process and discussed the interviews we had done so far, which helped us share interesting areas which other interviewers had come across. We then drafted up task examples from each interview, and identified overlapping ones to narrow the list to what is shown here.
+
+----
+
 Task: Literature Research (Billy)<br>
 Billy, a ECE Master student, is trying to find relevant literatures on large screen displays in preparing for his presentation in CS544. He opens up Google Scholar and types in the phrase ‘Large Screen Display’, and it returns numerous results. He opens up the papers that seems most relevant and spends his time reading them. Once in a while he goes off to check his emails and browses other websites, before he refocuses again on the literature search.
 
