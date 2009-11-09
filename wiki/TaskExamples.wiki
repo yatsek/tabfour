@@ -23,19 +23,19 @@ Sharing of jazz music videos (Russ) <br>
 Bob is a lover of jazz music, and frequently watches videos of jazz performances on YouTube. He finds that some of these recordings are of much higher quality than others, but are difficult to find again because there may be many recordings of the same artist playing the same song. After Thanksgiving dinner at his sister's house, Bob wants to show the videos to his brother-in-law, Carl. He recalls a particularly good video from his memory and searches until he finds it, while Carl looks on. They then repeat the process for about another hour.
 
 Discussion <br>
-The user has a need to access his saved stuff from other computers, which he may never have used before. This is also a case where bookmarking is still easier than just searching again, even though the bookmarks are only accessed occasionally. It’s an example of a “research collection”. 
+The user has a need to access his saved stuff from other computers, which he may never have used before. This is also a case where bookmarking is still easier than just searching again, even though the bookmarks are only accessed occasionally. It’s an example of a “research collection”. This particular task is only occasional, however we've seen other examples of people syncing bookmarks across machines or browsers.
 
 Undirected browsing (Russ) <br>
 Sam, a graduate student, arrives at the university 20 minutes before his class. He decides to browse his favourite news sites. He opens his web browser and opens a few standard pages, the ones he checks regularly for news and updates. As news stories catch his eye, he opens them in separate tabs, intending to read them soon. He then reads them one by one, but after a few minutes the class is about to begin so he must stop suddenly and come back to the stories later. 
 
 Discussion <br>
-This is an example of “frequently used” items. He wants to open a bunch of stuff quickly, and does it in a rote manner (which is currently inefficient). This also highlights the need to “hibernate” a whole group of tabs to come back to do later, which is a “to-do list”. 
+This is an example of “frequently used” items. He wants to open a bunch of stuff quickly, and does it in a rote manner (which is currently inefficient). This also highlights the need to “hibernate” a whole group of tabs to come back to do later, which is a “to-do list”. This task is fairly frequently performed, perhaps once or twice a day. The importance is not particularly high, as the current methods do get the job done.
 
 Russ's cousins (Russ)<br>
 Alice, an 18 year old hairdressing student, is planning a trip to take a hairdressing course with her friend, Jill. Since she doesn't own her own computer, she uses the family PC. Jill has previously researched courses and narrowed down the list to two, one in Vancouver and one in Los Angeles. Alice goes on the Internet to research flights, hotels, and local transportation options. She searches Expedia.ca for fight+hotel packages, and cross-references the hotels with Google Maps to determine if the hotel is walking distance from the course or if there is a reasonable public transportation option. After she finds some good options, Alice needs to show this information to Jill, so she emails her the pages.
 
 Discussion <br>
-This is a “research collection”, and also shows the need for “sharing”. It’s an example of a strongly cohesive “task”.
+This is a “research collection”, and also shows the need for “sharing”. It’s an example of a strongly cohesive “task”. Research tasks such as this are fairly common, although this particular example is certainly rare. It's unclear what percentage of research tasks are shared with another person either at the end or throughout the task. 
 
 ----
 
@@ -43,7 +43,7 @@ Emailing link to yourself/Not bookmarking (Mohan)<br>
 Task: Tom is casually browsing, viewing a bunch of websites, reading news articles. He reads a news article that reminds him of a topic that he had wanted to know more of. He opens a new window and starts searching for the topic and opens a bunch of web pages. He goes through the pages, jumping back and forth to assess their content. He closes pages that is not interesting to him. After he spends a while reading, he wants to return to whatever he was doing earlier. But he is not finished yet with his current exploration. So he copies the URLs of the open pages and pastes them into an email. He annotates them with text if necessary and then emails it to himself or saves it as a draft. At a later point of time, when Tom wants to resume working on the task, he opens up the email and opens the links in a new window and continues the process.
 
 Discussion<br>
-The user is an average computer user who wants to keep things simple by minimizing multiple simultaneous contexts. The task is representative of a large sample of users in that users employ different coping strategies (such as bookmarks) to keep track of multiple contexts and to alternate working between them. This task is an example of the extent of gardening people are willing to do to work with multiple contexts in a better manner.
+The user is an average computer user who wants to keep things simple by minimizing multiple simultaneous contexts. The task is representative of a large sample of users in that users employ different coping strategies (such as bookmarks) to keep track of multiple contexts and to alternate working between them. This task is an example of the extent of gardening people are willing to do to work with multiple contexts in a better manner. This task is fairly frequent, occurring every few days. This task is also fairly important, as users have reported closing window earlier than they would like because they want to reduce clutter/improve system performance, and manually tracking the addresses is too much trouble.
 
 ----
 
