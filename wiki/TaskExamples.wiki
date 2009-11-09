@@ -18,14 +18,20 @@ The user represents a unique group that requires special character input into th
 Sharing of jazz music videos (Russ) <br>
 Bob is a lover of jazz music, and frequently watches videos of jazz performances on YouTube. He finds that some of these recordings are of much higher quality than others, but are difficult to find again because there may be many recordings of the same artist playing the same song. After Thanksgiving dinner at his sister's house, Bob wants to show the videos to his brother-in-law, Carl. He recalls a particularly good video from his memory and searches until he finds it, while Carl looks on. They then repeat the process for about another hour.
 
+Discussion <br>
+The user has a need to access his saved stuff from other computers, which he may never have used before. This is also a case where bookmarking is still easier than just searching again, even though the bookmarks are only accessed occasionally. It’s an example of a “research collection”. 
+
 Undirected browsing (Russ) <br>
 Sam, a graduate student, arrives at the university 20 minutes before his class. He decides to browse his favourite news sites. He opens his web browser and opens a few standard pages, the ones he checks regularly for news and updates. As news stories catch his eye, he opens them in separate tabs, intending to read them soon. He then reads them one by one, but after a few minutes the class is about to begin so he must stop suddenly and come back to the stories later. 
 
+Discussion <br>
+This is an example of “frequently used” items. He wants to open a bunch of stuff quickly, and does it in a rote manner (which is currently inefficient). This also highlights the need to “hibernate” a whole group of tabs to come back to do later, which is a “to-do list”. 
 
 Russ's cousins (Russ)<br>
 Alice, an 18 year old hairdressing student, is planning a trip to take a hairdressing course with her friend, Jill. Since she doesn't own her own computer, she uses the family PC. Jill has previously researched courses and narrowed down the list to two, one in Vancouver and one in Los Angeles. Alice goes on the Internet to research flights, hotels, and local transportation options. She searches Expedia.ca for fight+hotel packages, and cross-references the hotels with Google Maps to determine if the hotel is walking distance from the course or if there is a reasonable public transportation option. After she finds some good options, Alice needs to show this information to Jill, so she emails her the pages.
 
-Russ's cousins synchronizing smartphone/desktop (Russ)<br>
+Discussion <br>
+This is a “research collection”, and also shows the need for “sharing”. It’s an example of a strongly cohesive “task”.
 
 Emailing link to yourself/Not bookmarking (Mohan)<br>
 -------------------------------------------------
