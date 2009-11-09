@@ -52,7 +52,7 @@ Task: Hibernation Interruption? (Tao)<br>
 Tao is a graduate student at UBC. He is planning for his Christmas trip. He is now researching his trip on the computer. He opens up several tabs in his browser, including Expedia.ca to check for air tickets, google to check for possible destinations and so on. However it is too late now and Tao is quite sleepy and wants to go to sleep. But he is right in the middle of it and does not want to reopen all those pages next time. Unfortunately, the browser he use does not provide an easy-to-use save session function. So he reluctantly closes his browser and goes to bed.
 
 Discussion:
-???
+The need to save state is a recurring theme. For some users, this will be a common task, as they turn off their computer every night but have not enabled the hibernate feature on their computer. Others use shared computers, where it is impolite to leave many windows open between browsing sessions. 
 
 Sharing Links thru IM/Facebook? (Tao) <br>
 
