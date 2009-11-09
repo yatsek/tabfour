@@ -58,8 +58,6 @@ Tao is a graduate student at UBC. He is planning for his Christmas trip. He is n
 Discussion:
 The need to save state is a recurring theme. For some users, this will be a common task, as they turn off their computer every night but have not enabled the hibernate feature on their computer. Others use shared computers, where it is impolite to leave many windows open between browsing sessions. 
 
-Sharing Links thru IM/Facebook? (Tao) <br>
-
 Task: Open several pages each time browser starts (Tao) <br>
 
 Jimmy is a first year undergraduate student at UBC, studying Engineering. Jimmy has just returned from school and had dinner with his family. He sits down in front of his computer and starts surfing the internet. Like everyday, now Jimmy wants to open several websites from his bookmark collection at one time, including facebook, gmail, youtube, and some other news websites. He then reads the websites in detail one by one.
