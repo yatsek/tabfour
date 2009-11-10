@@ -1,5 +1,6 @@
 #summary Checklist of topics/ideas for semi-structured interviews.
 
+This document is a list of high-level topic areas and medium-level topics and questions which were used to guide our semi-structured interview process. Each interviewer kept either a printed or digital copy with them while performing the interview, as a resource to help them guide the conversation and encourage adequate coverage of each topic area.
 
 =Background=
  * job
