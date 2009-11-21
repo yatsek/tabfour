@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<contexts>
+  <context active="true" label="Fun">
+    <tabs label="Tabs">
+      <tab address="http://www.cnn.com" label="CNN"/>
+      <tab address="http://www.xkcd.org" label="XKCD"/>
+    </tabs>
+  </context>
+  <context active="true" label="Work">
+    <tabs label="Tabs">
+      <tab address="http://www.cs.ubc.ca" label="CS Homepage"/>
+      <tab address="http://scholar.google.com" label="Google Scholar"/>
+    </tabs>
+  </context>
+</contexts>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="1024" height="700" windowComplete="init()">
+	<mx:Script>
+		<![CDATA[
+		[Bindable]
+		public var contexts:XML;
+		[Bindable]
+		public var address:String = "";
+		
+		public function init():void
+		{
+			var file:File = File.applicationDirectory.resolvePath("test.xml"); 
+			var fileStream:FileStream = new FileStream(); 
+			fileStream.open(file, FileMode.READ); 
+			var stringRead:String = fileStream.readUTFBytes(fileStream.bytesAvailable);
+			contexts = XML(stringRead); 
+			fileStream.close();
+		}
+		]]>
+	</mx:Script>
+
+	<mx:VBox x="9" y="9" width="100%" height="100%">
+		<mx:HBox width="100%" height="25">
+			<mx:Text textAlign="left" height="31" text="Address"/>
+			<mx:TextInput width="100%" height="25" id="addressInput" text="{address}" enter="address=addressInput.text;"/>
+			<mx:Button label="Go" width="42" height="24" click="address=addressInput.text;"/>
+		</mx:HBox>
+		<mx:HDividedBox width="100%" height="100%">
+			<mx:Accordion width="150" height="100%">
+				<mx:Canvas label="Active" width="100%" height="100%">
+					<mx:Tree x="0" y="0" width="100%" height="100%" dataProvider="{contexts}" id="tree" 
+						labelField="@label" showRoot="false"
+						change="address = tree.selectedItem.@address;"/>
+					
+				</mx:Canvas>
+				<mx:Canvas label="Inactive" width="100%" height="100%">
+					
+				</mx:Canvas>
+			</mx:Accordion>
+			<mx:HTML x="801" y="278" width="100%" height="100%" id="html" location="{address}"/>
+		</mx:HDividedBox>
+	</mx:VBox>
+</mx:WindowedApplication>
