@@ -46,7 +46,6 @@ package flexlib.containers
 	import mx.controls.Button;
 	import mx.controls.Menu;
 	import mx.controls.PopUpButton;
-	import mx.controls.Spacer;
 	import mx.core.Container;
 	import mx.core.EdgeMetrics;
 	import mx.core.ScrollPolicy;
@@ -747,18 +746,20 @@ package flexlib.containers
 		private var document_icon:Class;
 		protected function addTab(event:MouseEvent):void 
 		{
-				var lbl:String = "(Untitled)";
-				
-				var curNum:Number = this.numChildren + 1;
-				
-				var child:VBox = new VBox();
-				
-				child.setStyle("closable", true);
-				child.label = lbl;
-				child.icon = document_icon;
-				
-				this.addChild(child);
-			}
+			/*var lbl:String = "(Untitled)";
+			
+			var curNum:Number = this.numChildren + 1;
+			
+			var child:VBox = new VBox();
+			
+			child.setStyle("closable", true);
+			child.label = lbl;
+			child.icon = document_icon;
+			
+			this.addChild(child);*/
+			
+			dispatchEvent(new Event("AddTab"));
+		}
 			
 	    /**
 	    * For extensibility, if you want to use a custom extended version of SuperTabBar, you can do so by
