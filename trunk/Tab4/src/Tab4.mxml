@@ -5,6 +5,8 @@
 	layout="absolute" width="800" height="600" windowComplete="init()">
 <mx:Script>
 <![CDATA[
+	import mx.core.Container;
+	import mx.containers.*;
 	import mx.controls.Label;
 	import mx.controls.HTML;
 	import flexlib.controls.tabBarClasses.SuperTab;
@@ -51,6 +53,24 @@
 		trace("Tried to add tab");
 	}
 	
+	public function changeTabURLinFocus(address:String):void
+	{
+		// retrive current tab in focus
+		var focusContextContainer:Container = contextTabBar.selectedChild as Container;
+		if( focusContextContainer.numChildren > 0 )
+		{
+			var focusTabNav:SuperTabNavigator = focusContextContainer.getChildAt(0) as SuperTabNavigator;
+			var focusTabContainer:Container = focusTabNav.selectedChild as Container;
+			
+			if( focusTabContainer.numChildren > 0 )
+			{
+				var focusPage:HTML = focusTabContainer.getChildAt(0) as HTML;
+				focusPage.location = address;
+				focusPage.reload();
+			}
+		}
+	}
+	
 	private function addContext(lbl:String):void
 	{
 		if(lbl=="") lbl = "(Default)";
@@ -94,6 +114,8 @@
 		
 		var page:HTML = new HTML();
 		page.location = address;		
+		page.percentHeight = 100;
+		page.percentWidth = 100;
 		child.addChild(page);
 		
 		navigator.addChild(child);
@@ -105,8 +127,8 @@
 	<mx:VBox x="9" y="9" width="100%" height="100%">
 		<mx:HBox width="100%" height="25">
 			<mx:Text textAlign="left" height="31" text="Address"/>
-			<mx:TextInput width="100%" height="25" id="addressInput" text="{address}" enter="address=addressInput.text;"/>
-			<mx:Button label="Go" width="42" height="24" click="address=addressInput.text;"/>
+			<mx:TextInput width="100%" height="25" id="addressInput" text="{address}" enter="address=addressInput.text;changeTabURLinFocus(address);"/>
+			<mx:Button label="Go" width="42" height="24" click="address=addressInput.text;changeTabURLinFocus(address);"/>
 		</mx:HBox>
 		<mx:HDividedBox width="100%" height="100%">
 			<mx:Accordion width="150" height="100%">
