@@ -31,6 +31,7 @@
 		contexts = XML(stringRead); 
 		fileStream.close();
 		
+		contextTabBar.addEventListener("AddTab", addContextWithTabBarButton);
 		addContext("Default");
 		//addTab(homepage, nav2, homepage);
 	}
@@ -38,6 +39,16 @@
 	public function treeItemDoubleClicked(e:ListEvent):void
 	{
 		trace(XML(e.itemRenderer.data).localName());
+	}
+	
+	public function addContextWithTabBarButton(e:Event):void
+	{
+		trace("Tried to add context");
+	}
+	
+	public function addTabWithTabBarButton(e:Event):void
+	{
+		trace("Tried to add tab");
 	}
 	
 	private function addContext(lbl:String):void
@@ -58,6 +69,7 @@
 		var nav2:SuperTabNavigator = new SuperTabNavigator();
 		nav2.percentWidth = 100;
 		nav2.percentHeight = 100;
+		nav2.addEventListener("AddTab", addTabWithTabBarButton);
 		
 		addTab(homepage, nav2, homepage);
 		
