@@ -45,12 +45,13 @@
 	
 	public function addContextWithTabBarButton(e:Event):void
 	{
-		trace("Tried to add context");
+		addContext("New Group");
 	}
 	
 	public function addTabWithTabBarButton(e:Event):void
 	{
-		trace("Tried to add tab");
+		var nav: SuperTabNavigator = Context(contextTabBar.selectedChild).nav2; 
+		addTab("Homepage", nav, "http://www.google.ca");
 	}
 	
 	public function changeTabURLinFocus(address:String):void
@@ -74,27 +75,19 @@
 	private function addContext(lbl:String):void
 	{
 		if(lbl=="") lbl = "(Default)";
-		
-		var child:VBox = new VBox();
-		child.setStyle("closable", true);
-		child.label = lbl;
-		
+
+		var context:Context = new Context();
+		context.label = lbl;
+		context.setStyle("closable", true);
 		if(icon) {
-			child.icon = icon;
+			context.icon = icon;
 		}
 		else {
-			child.icon = document_icon;
+			context.icon = document_icon;
 		}
-		
-		var nav2:SuperTabNavigator = new SuperTabNavigator();
-		nav2.percentWidth = 100;
-		nav2.percentHeight = 100;
-		nav2.addEventListener("AddTab", addTabWithTabBarButton);
-		
-		addTab(homepage, nav2, homepage);
-		
-		child.addChild(nav2);
-		contextTabBar.addChild(child);
+		contextTabBar.addChild(context);
+		addTab(homepage, context.nav2, homepage);
+		context.nav2.addEventListener("AddTab", addTabWithTabBarButton);
 	}
 	
 	private function addTab(lbl:String, navigator:SuperTabNavigator, address:String, icon:Class=null):void 

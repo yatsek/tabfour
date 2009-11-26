@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:flexlib="flexlib.containers.*"
+	percentWidth="100" percentHeight="100">
+	<flexlib:SuperTabNavigator id="nav2" percentWidth="100" percentHeight="100">
+		
+	</flexlib:SuperTabNavigator>
+</mx:VBox>
