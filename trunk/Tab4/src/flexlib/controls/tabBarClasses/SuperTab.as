@@ -25,11 +25,14 @@ package flexlib.controls.tabBarClasses
 {
 	
 	import flash.display.DisplayObject;
+	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.text.TextFieldType;
+	import flash.ui.ContextMenu;
+	import flash.ui.ContextMenuItem;
 	
 	import flexlib.events.SuperTabEvent;
 	
@@ -37,9 +40,7 @@ package flexlib.controls.tabBarClasses
 	import mx.controls.tabBarClasses.Tab;
 	import mx.core.UIComponent;
 	import mx.core.mx_internal;
-	
-	import flash.ui.ContextMenu;
-	import flash.ui.ContextMenuItem;
+	import mx.events.MenuEvent;
 	
 	use namespace mx_internal;
 	
@@ -104,13 +105,58 @@ package flexlib.controls.tabBarClasses
 			this.doubleClickEnabled = true;
 			this.addEventListener(MouseEvent.DOUBLE_CLICK, doubleClickHandler);
 			
+			initMenu();
+		}
+		
+		private function initMenu():void
+		{
 			// attempt to add right click menu here
-			var menuItem:ContextMenuItem = new ContextMenuItem("Change Color");
+			var menuItem1:ContextMenuItem = new ContextMenuItem("Add");
+				menuItem1.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, menuAdd);
+			var menuItem2:ContextMenuItem = new ContextMenuItem("Rename");
+				menuItem2.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, menuRename);
+			var menuItem3:ContextMenuItem = new ContextMenuItem("Share");
+				menuItem3.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, menuShare);
+			var menuItem4:ContextMenuItem = new ContextMenuItem("Hibernate");
+				menuItem4.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, menuHibernate);
+			var menuItem5:ContextMenuItem = new ContextMenuItem("Close");
+				menuItem5.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, menuClose);
+			
+			
 			var customContextMenu:ContextMenu = new ContextMenu();
 			//hide the Flash menu
 			customContextMenu.hideBuiltInItems();
-			customContextMenu.customItems.push(menuItem);
+			customContextMenu.customItems.push(menuItem1);
+			customContextMenu.customItems.push(menuItem2);
+			customContextMenu.customItems.push(menuItem3);
+			customContextMenu.customItems.push(menuItem4);
+			customContextMenu.customItems.push(menuItem5);
 			this.contextMenu = customContextMenu;
+		}
+		
+		protected function menuAdd(e:ContextMenuEvent):void
+		{
+			trace("menuAdd handler");
+		}
+		
+		protected function menuRename(e:ContextMenuEvent):void
+		{
+			trace("menuRename handler");
+		}
+		
+		protected function menuShare(e:ContextMenuEvent):void
+		{
+			trace("menuShare handler");
+		}
+		
+		protected function menuHibernate(e:ContextMenuEvent):void
+		{
+			trace("menuHibernate handler");
+		}
+		
+		protected function menuClose(e:ContextMenuEvent):void
+		{
+			trace("menuClose handler");
 		}
 		
 		private var _closePolicy:String;

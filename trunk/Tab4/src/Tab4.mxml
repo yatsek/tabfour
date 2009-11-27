@@ -5,6 +5,7 @@
 	layout="absolute" width="800" height="600" windowComplete="init()">
 <mx:Script>
 <![CDATA[
+	import mx.events.MenuEvent;
 	import mx.core.Container;
 	import mx.containers.*;
 	import mx.controls.Label;
@@ -36,6 +37,9 @@
 		contextTabBar.addEventListener("AddTab", addContextWithTabBarButton);
 		addContext("Default");
 		//addTab(homepage, nav2, homepage);
+		
+		//event listener to update address bar, dispatched from tab.mxml
+		(Tab(getCurrentTabNavigator().selectedChild)).addEventListener("UpdateAddress", updateAddressBar);
 	}
 	
 	public function treeItemDoubleClicked(e:ListEvent):void
@@ -46,6 +50,9 @@
 	public function addContextWithTabBarButton(e:Event):void
 	{
 		addContext("New Group");
+		
+		// set context focus
+		contextTabBar.selectedIndex = contextTabBar.numChildren-1;
 	}
 	
 	public function getCurrentTabNavigator():SuperTabNavigator
@@ -56,6 +63,14 @@
 	public function addTabWithTabBarButton(e:Event):void
 	{ 
 		addTab("Homepage", getCurrentTabNavigator(), "http://www.google.ca");
+		
+		//set tab focus
+		getCurrentTabNavigator().selectedIndex = getCurrentTabNavigator().numChildren-1;
+	}
+	
+	public function updateAddressBar(e:Event):void
+	{
+		address = (Tab(getCurrentTabNavigator().selectedChild)).htmlPane.location;
 	}
 	
 	public function changeTabURLinFocus(address:String):void
