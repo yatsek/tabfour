@@ -9,14 +9,18 @@ package
 		
 		public function TitleNotifyingHTMLHost(parentTab:Tab, defaultBehaviors:Boolean=true)
 		{
-			super(defaultBehaviors);
-			
+			super(defaultBehaviors);			
 			this.parentTab = parentTab;
 		}
 		
 		override public function updateTitle(title:String):void
 		{
 			parentTab.titleChanged(title);
+		}
+		
+		override public function updateLocation(locationURL:String):void
+		{
+			parentTab.locationChanged(locationURL);
 		}
 	}
 }

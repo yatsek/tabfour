@@ -41,7 +41,6 @@ package flexlib.containers
 	import mx.containers.BoxDirection;
 	import mx.containers.Canvas;
 	import mx.containers.TabNavigator;
-	import mx.containers.VBox;
 	import mx.containers.ViewStack;
 	import mx.controls.Button;
 	import mx.controls.Menu;
@@ -141,6 +140,7 @@ package flexlib.containers
 	 */
 	public class SuperTabNavigator extends TabNavigator
 	{
+	    public static const AddTabEvent:String = "AddTab";	    
 	    
 	    private var stopIndexChangeEvent:Boolean = false;
 	    /**
@@ -719,8 +719,6 @@ package flexlib.containers
 	        	addTabButton.addEventListener(MouseEvent.CLICK, addTab);
 	        	holder.addChild(addTabButton);
 	        	
-	        	
-	        	
 	        	// So now holder has 2 children: canvas and popupButton
 	        	//holder.addChild(popupButton);
 	        }
@@ -746,19 +744,7 @@ package flexlib.containers
 		private var document_icon:Class;
 		protected function addTab(event:MouseEvent):void 
 		{
-			/*var lbl:String = "(Untitled)";
-			
-			var curNum:Number = this.numChildren + 1;
-			
-			var child:VBox = new VBox();
-			
-			child.setStyle("closable", true);
-			child.label = lbl;
-			child.icon = document_icon;
-			
-			this.addChild(child);*/
-			
-			dispatchEvent(new Event("AddTab"));
+			dispatchEvent(new Event(AddTabEvent));
 		}
 			
 	    /**
