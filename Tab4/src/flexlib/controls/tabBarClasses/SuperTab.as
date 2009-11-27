@@ -34,13 +34,13 @@ package flexlib.controls.tabBarClasses
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
 	
+	import flexlib.containers.SuperTabNavigator;
 	import flexlib.events.SuperTabEvent;
 	
 	import mx.controls.Button;
 	import mx.controls.tabBarClasses.Tab;
 	import mx.core.UIComponent;
 	import mx.core.mx_internal;
-	import mx.events.MenuEvent;
 	
 	use namespace mx_internal;
 	
