@@ -1,5 +1,6 @@
 package
 {
+	import flash.events.Event;
 	import flash.html.HTMLHost;
 
 	public class TitleNotifyingHTMLHost extends HTMLHost
