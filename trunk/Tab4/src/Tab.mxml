@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:flexlib="flexlib.containers.*" 
+	percentWidth="100" percentHeight="100">
+<mx:Script>
+	<![CDATA[
+		public var titleNotifyingHost:HTMLHost; 
+		public function init():void
+		{
+			titleNotifyingHost = new TitleNotifyingHTMLHost(this);
+			htmlPane.htmlHost = titleNotifyingHost;
+		}
+		
+		public function titleChanged(title:String):void
+		{
+			label = title;
+			trace(title);
+		}
+	]]>
+</mx:Script>
+		
+	<mx:HTML id="htmlPane" initialize="init()"/>
+</mx:VBox>

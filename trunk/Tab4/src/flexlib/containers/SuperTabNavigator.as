@@ -778,6 +778,12 @@ package flexlib.containers
 	    }
 	    
 	    private function handleTabClose(event:SuperTabEvent):void {
+	    	//don't let the last tab be closed
+	    	if( this.numChildren <= 1)
+	    	{
+	    		event.preventDefault();
+	    	}
+	    	
 	    	var clone:SuperTabEvent = event.clone() as SuperTabEvent;
 	    	dispatchEvent(clone);
 	    	

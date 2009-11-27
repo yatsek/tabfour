@@ -48,28 +48,36 @@
 		addContext("New Group");
 	}
 	
-	public function addTabWithTabBarButton(e:Event):void
+	public function getCurrentTabNavigator():SuperTabNavigator
 	{
-		var nav: SuperTabNavigator = Context(contextTabBar.selectedChild).nav2; 
-		addTab("Homepage", nav, "http://www.google.ca");
+		return Context(contextTabBar.selectedChild).navigator;
+	}
+	
+	public function addTabWithTabBarButton(e:Event):void
+	{ 
+		addTab("Homepage", getCurrentTabNavigator(), "http://www.google.ca");
 	}
 	
 	public function changeTabURLinFocus(address:String):void
 	{
-		// retrive current tab in focus
-		var focusContextContainer:Container = contextTabBar.selectedChild as Container;
-		if( focusContextContainer.numChildren > 0 )
-		{
-			var focusTabNav:SuperTabNavigator = focusContextContainer.getChildAt(0) as SuperTabNavigator;
-			var focusTabContainer:Container = focusTabNav.selectedChild as Container;
-			
-			if( focusTabContainer.numChildren > 0 )
-			{
-				var focusPage:HTML = focusTabContainer.getChildAt(0) as HTML;
-				focusPage.location = address;
-				focusPage.reload();
-			}
-		}
+//		// retrive current tab in focus
+//		var focusContextContainer:Container = contextTabBar.selectedChild as Container;
+//		if( focusContextContainer.numChildren > 0 )
+//		{
+//			var focusTabNav:SuperTabNavigator = focusContextContainer.getChildAt(0) as SuperTabNavigator;
+//			var focusTabContainer:Container = focusTabNav.selectedChild as Container;
+//			
+//			if( focusTabContainer.numChildren > 0 )
+//			{
+//				var focusPage:HTML = focusTabContainer.getChildAt(0) as HTML;
+//				focusPage.location = address;
+//				focusPage.reload();
+//			}
+//		}
+
+		var tab:Tab = Tab(getCurrentTabNavigator().selectedChild);
+		tab.htmlPane.location = address;
+		//tab.htmlPane.htmlHost.updateTitle(
 	}
 	
 	private function addContext(lbl:String):void
@@ -86,34 +94,26 @@
 			context.icon = document_icon;
 		}
 		contextTabBar.addChild(context);
-		addTab(homepage, context.nav2, homepage);
-		context.nav2.addEventListener("AddTab", addTabWithTabBarButton);
+		addTab(homepage, context.navigator, homepage);
+		context.navigator.addEventListener("AddTab", addTabWithTabBarButton);
 	}
 	
 	private function addTab(lbl:String, navigator:SuperTabNavigator, address:String, icon:Class=null):void 
 	{
 		if(lbl=="") lbl = "(Untitled)";
 		
-		var child:VBox = new VBox();
-		child.setStyle("closable", true);
-		child.label = lbl;
-		
+		var tab:Tab = new Tab();
+		tab.setStyle("closable", true);
+		tab.label = lbl;
 		if(icon) {
-			child.icon = icon;
+			tab.icon = icon;
 		}
 		else {
-			child.icon = document_icon;
-		}
-		
-		var page:HTML = new HTML();
-		page.location = address;		
-		page.percentHeight = 100;
-		page.percentWidth = 100;
-		child.addChild(page);
-		
-		navigator.addChild(child);
+			tab.icon = document_icon;
+		}		
+		navigator.addChild(tab);
+		tab.htmlPane.location = address;
 	}
-
 ]]>
 </mx:Script>
 
@@ -130,21 +130,14 @@
 						labelField="@label" showRoot="false"
 						change="address = tree.selectedItem.@address;"
 						doubleClickEnabled="true"
-						itemDoubleClick="treeItemDoubleClicked(event)"/>
-					
+						itemDoubleClick="treeItemDoubleClicked(event)"/>					
 				</mx:Canvas>
-				<mx:Canvas label="Inactive" width="100%" height="100%">
-					
-				</mx:Canvas>
+				<mx:Canvas label="Inactive" width="100%" height="100%"/>
 			</mx:Accordion>
 			<flexlib:SuperTabNavigator id="contextTabBar" scrollSpeed="25" dropShadowEnabled="true"
 				stopScrollingEvent="{MouseEvent.MOUSE_OUT}" startScrollingEvent="{MouseEvent.MOUSE_OVER}"
 				width="100%" height="100%" horizontalGap="0" editableTabLabels="true"
-				closePolicy="{SuperTab.CLOSE_ALWAYS}"
-				/>
-
-			<!-- <mx:HTML x="801" y="278" width="100%" height="100%" id="html" location="{address}"
-				scaleX="0.33" scaleY="0.33"/> -->
+				closePolicy="{SuperTab.CLOSE_ALWAYS}"/>
 		</mx:HDividedBox>
 	</mx:VBox>
 </mx:WindowedApplication>
