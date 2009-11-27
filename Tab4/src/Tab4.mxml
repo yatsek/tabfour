@@ -5,6 +5,7 @@
 	layout="absolute" width="800" height="600" windowComplete="init()">
 <mx:Script>
 <![CDATA[
+	import mx.events.IndexChangedEvent;
 	import mx.events.MenuEvent;
 	import mx.core.Container;
 	import mx.containers.*;
@@ -32,6 +33,7 @@
 		fileStream.close();
 		
 		contextTabBar.addEventListener(SuperTabNavigator.AddTabEvent, addContextWithTabBarButton);
+		contextTabBar.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);
 		addContext("Default");
 	}
 	
@@ -66,7 +68,7 @@
 		getCurrentTabNavigator().selectedIndex = getCurrentTabNavigator().numChildren-1;
 	}
 	
-	public function updateAddressBar(e:Event):void
+	public function updateAddressBar(e:Event=null):void
 	{
 		addressInput.text = getCurrentTab().htmlPane.location;
 	}
@@ -92,6 +94,7 @@
 		contextTabBar.addChild(context);
 		addTab(homepage, context.navigator, homepage);
 		context.navigator.addEventListener("AddTab", addTabWithTabBarButton);
+		context.navigator.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);
 	}
 	
 	private function addTab(lbl:String, navigator:SuperTabNavigator, address:String, icon:Class=null):void 
@@ -114,7 +117,7 @@
 	
 	public function locationChanged(e:Event):void
 	{
-		addressInput.text = getCurrentTab().location;
+		updateAddressBar();
 	}
 ]]>
 </mx:Script>

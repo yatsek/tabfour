@@ -5,7 +5,6 @@
 <mx:Script>
 	<![CDATA[
 		public var titleNotifyingHost:HTMLHost;
-		public var location:String;
 		public var title:String;
 		public static const locationChangedEvent:String = "LocationChanged"; 
 		public function init():void
@@ -22,7 +21,6 @@
 		
 		public function locationChanged(locationURL:String):void
 		{
-			location = locationURL;
 			dispatchEvent(new Event(locationChangedEvent));
 		}
 	]]>
