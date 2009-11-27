@@ -25,22 +25,69 @@
 
 	public function init():void
 	{
-		var file:File = File.applicationDirectory.resolvePath("test.xml"); 
-		var fileStream:FileStream = new FileStream(); 
-		fileStream.open(file, FileMode.READ); 
-		var stringRead:String = fileStream.readUTFBytes(fileStream.bytesAvailable);
-		contexts = XML(stringRead); 
-		fileStream.close();
+		//save before exiting
+		NativeApplication.nativeApplication.addEventListener(Event.EXITING, applicationExitHandler);
 		
 		contextTabBar.addEventListener(SuperTabNavigator.AddTabEvent, addContextWithTabBarButton);
 		contextTabBar.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);
-		addContext("Default");
+		
+		loadContexts();
+		initContexts();
 	}
 	
-	public function treeItemDoubleClicked(e:ListEvent):void
+	public function applicationExitHandler():void
+	{
+		saveContexts();
+	}
+	
+	public function loadContexts():void
+	{
+		var file:File = File.applicationDirectory.resolvePath("test.xml"); 
+        var fileStream:FileStream = new FileStream(); 
+        fileStream.open(file, FileMode.READ); 
+        var stringRead:String = fileStream.readUTFBytes(fileStream.bytesAvailable);
+        contexts = XML(stringRead); 
+        fileStream.close();        
+	}
+	
+	public function saveContexts():void
+	{
+		var file:File = new File(File.applicationDirectory.nativePath.toString() + "/test.xml");
+        var fileStream:FileStream = new FileStream();
+        fileStream.open(file, FileMode.WRITE);
+        fileStream.writeUTFBytes(contexts.toXMLString());
+        fileStream.close();
+	}
+	
+	public function initContexts():void
+	{
+		var activeContexts:XMLList = contexts.context.(@active == 'true');
+		if( activeContexts.length() == 0 )
+		{
+    		var defaultContext:Context = addContext("Default");
+    		addTab(homepage, defaultContext.navigator, homepage);
+        } else
+        {
+        	for each (var activeContext:XML in activeContexts)
+        	{
+                var currentContext:Context = addContext(activeContext.@label);
+                for each (var tab:XML in activeContext.tabs.tab)
+                {
+                	addTab(tab.@label, currentContext.navigator, tab.@address);
+                }
+        	}
+        }
+	}
+	
+	public function activeTreeItemDoubleClicked(e:ListEvent):void
 	{
 		trace(XML(e.itemRenderer.data).localName());
 	}
+	
+	public function inactiveTreeItemDoubleClicked(e:ListEvent):void
+    {
+        trace(XML(e.itemRenderer.data).localName());
+    }
 	
 	public function addContextWithTabBarButton(e:Event):void
 	{
@@ -64,6 +111,8 @@
 	{ 
 		addTab(homepage, getCurrentTabNavigator(), homepage);
 		
+		
+		
 		//set tab focus
 		getCurrentTabNavigator().selectedIndex = getCurrentTabNavigator().numChildren-1;
 	}
@@ -78,7 +127,7 @@
 		getCurrentTab().htmlPane.location = address;
 	}
 	
-	private function addContext(lbl:String):void
+	private function addContext(lbl:String):Context
 	{
 		if(lbl=="") lbl = "(Default)";
 
@@ -92,12 +141,13 @@
 			context.icon = document_icon;
 		}
 		contextTabBar.addChild(context);
-		addTab(homepage, context.navigator, homepage);
 		context.navigator.addEventListener("AddTab", addTabWithTabBarButton);
 		context.navigator.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);
+		
+		return context;
 	}
 	
-	private function addTab(lbl:String, navigator:SuperTabNavigator, address:String, icon:Class=null):void 
+	private function addTab(lbl:String, navigator:SuperTabNavigator, address:String, icon:Class=null):Tab 
 	{
 		if(lbl=="") lbl = "(Untitled)";
 		
@@ -113,6 +163,8 @@
 		tab.addEventListener(Tab.locationChangedEvent, locationChanged);
 		navigator.addChild(tab);
 		tab.htmlPane.location = address;
+		
+		return tab;
 	}
 	
 	public function locationChanged(e:Event):void
@@ -131,13 +183,22 @@
 		<mx:HDividedBox width="100%" height="100%">
 			<mx:Accordion width="150" height="100%">
 				<mx:Canvas label="Active" width="100%" height="100%">
-					<mx:Tree x="0" y="0" width="100%" height="100%" dataProvider="{contexts}" id="tree" 
-						labelField="@label" showRoot="false"
-						change="addressInput.text = tree.selectedItem.@address; changeTabURLinFocus(addressInput.text);"
+					<mx:Tree id="treeActive" x="0" y="0" width="100%" height="100%" 
+						dataProvider="{contexts.context.(@active == 'true')}"  
+						labelField="@label"
+						change="addressInput.text = treeActive.selectedItem.@address; changeTabURLinFocus(addressInput.text);"
 						doubleClickEnabled="true"
-						itemDoubleClick="treeItemDoubleClicked(event)"/>					
+						itemDoubleClick="activeTreeItemDoubleClicked(event)"/>					
 				</mx:Canvas>
-				<mx:Canvas label="Inactive" width="100%" height="100%"/>
+				<mx:Canvas label="Inactive" width="100%" height="100%">
+					<mx:Tree id="treeInactive" x="0" y="0" width="100%" height="100%" 
+						dataProvider="{contexts.context.(@active == 'false')}" 
+                        labelField="@label" 
+                        change="addressInput.text = treeInactive.selectedItem.@address; changeTabURLinFocus(addressInput.text);"
+                        doubleClickEnabled="true"
+                        itemDoubleClick="inactiveTreeItemDoubleClicked(event)"/>
+				</mx:Canvas>
+				
 			</mx:Accordion>
 			<flexlib:SuperTabNavigator id="contextTabBar" scrollSpeed="25" dropShadowEnabled="true"
 				stopScrollingEvent="{MouseEvent.MOUSE_OUT}" startScrollingEvent="{MouseEvent.MOUSE_OVER}"
