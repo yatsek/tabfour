@@ -14,8 +14,6 @@
 	import mx.events.ListEvent;
 	[Bindable]
 	public var contexts:XML;
-	[Bindable]
-	public var address:String = "";
 	public var homepage:String = "http://www.cbc.ca";
 	
 	[Embed(source="./flexlib/assets/document.png")]
@@ -24,7 +22,6 @@
 	[Embed(source="./flexlib/assets/home.png")]
 	private var home_icon:Class;
 
-	
 	public function init():void
 	{
 		var file:File = File.applicationDirectory.resolvePath("test.xml"); 
@@ -34,12 +31,8 @@
 		contexts = XML(stringRead); 
 		fileStream.close();
 		
-		contextTabBar.addEventListener("AddTab", addContextWithTabBarButton);
+		contextTabBar.addEventListener(SuperTabNavigator.AddTabEvent, addContextWithTabBarButton);
 		addContext("Default");
-		//addTab(homepage, nav2, homepage);
-		
-		//event listener to update address bar, dispatched from tab.mxml
-		(Tab(getCurrentTabNavigator().selectedChild)).addEventListener("UpdateAddress", updateAddressBar);
 	}
 	
 	public function treeItemDoubleClicked(e:ListEvent):void
@@ -60,9 +53,14 @@
 		return Context(contextTabBar.selectedChild).navigator;
 	}
 	
+	public function getCurrentTab():Tab
+	{
+		return Tab(getCurrentTabNavigator().selectedChild);
+	}
+	
 	public function addTabWithTabBarButton(e:Event):void
 	{ 
-		addTab("Homepage", getCurrentTabNavigator(), "http://www.google.ca");
+		addTab(homepage, getCurrentTabNavigator(), homepage);
 		
 		//set tab focus
 		getCurrentTabNavigator().selectedIndex = getCurrentTabNavigator().numChildren-1;
@@ -70,29 +68,12 @@
 	
 	public function updateAddressBar(e:Event):void
 	{
-		address = (Tab(getCurrentTabNavigator().selectedChild)).htmlPane.location;
+		addressInput.text = getCurrentTab().htmlPane.location;
 	}
 	
 	public function changeTabURLinFocus(address:String):void
 	{
-//		// retrive current tab in focus
-//		var focusContextContainer:Container = contextTabBar.selectedChild as Container;
-//		if( focusContextContainer.numChildren > 0 )
-//		{
-//			var focusTabNav:SuperTabNavigator = focusContextContainer.getChildAt(0) as SuperTabNavigator;
-//			var focusTabContainer:Container = focusTabNav.selectedChild as Container;
-//			
-//			if( focusTabContainer.numChildren > 0 )
-//			{
-//				var focusPage:HTML = focusTabContainer.getChildAt(0) as HTML;
-//				focusPage.location = address;
-//				focusPage.reload();
-//			}
-//		}
-
-		var tab:Tab = Tab(getCurrentTabNavigator().selectedChild);
-		tab.htmlPane.location = address;
-		//tab.htmlPane.htmlHost.updateTitle(
+		getCurrentTab().htmlPane.location = address;
 	}
 	
 	private function addContext(lbl:String):void
@@ -125,9 +106,15 @@
 		}
 		else {
 			tab.icon = document_icon;
-		}		
+		}
+		tab.addEventListener(Tab.locationChangedEvent, locationChanged);
 		navigator.addChild(tab);
 		tab.htmlPane.location = address;
+	}
+	
+	public function locationChanged(e:Event):void
+	{
+		addressInput.text = getCurrentTab().location;
 	}
 ]]>
 </mx:Script>
@@ -135,15 +122,15 @@
 	<mx:VBox x="9" y="9" width="100%" height="100%">
 		<mx:HBox width="100%" height="25">
 			<mx:Text textAlign="left" height="31" text="Address"/>
-			<mx:TextInput width="100%" height="25" id="addressInput" text="{address}" enter="address=addressInput.text;changeTabURLinFocus(address);"/>
-			<mx:Button label="Go" width="42" height="24" click="address=addressInput.text;changeTabURLinFocus(address);"/>
+			<mx:TextInput width="100%" height="25" id="addressInput" enter="changeTabURLinFocus(addressInput.text);"/>
+			<mx:Button label="Go" width="42" height="24" click="changeTabURLinFocus(addressInput.text);"/>
 		</mx:HBox>
 		<mx:HDividedBox width="100%" height="100%">
 			<mx:Accordion width="150" height="100%">
 				<mx:Canvas label="Active" width="100%" height="100%">
 					<mx:Tree x="0" y="0" width="100%" height="100%" dataProvider="{contexts}" id="tree" 
 						labelField="@label" showRoot="false"
-						change="address = tree.selectedItem.@address;"
+						change="addressInput.text = tree.selectedItem.@address; changeTabURLinFocus(addressInput.text);"
 						doubleClickEnabled="true"
 						itemDoubleClick="treeItemDoubleClicked(event)"/>					
 				</mx:Canvas>

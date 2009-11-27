@@ -4,7 +4,10 @@
 	percentWidth="100" percentHeight="100">
 <mx:Script>
 	<![CDATA[
-		public var titleNotifyingHost:HTMLHost; 
+		public var titleNotifyingHost:HTMLHost;
+		public var location:String;
+		public var title:String;
+		public static const locationChangedEvent:String = "LocationChanged"; 
 		public function init():void
 		{
 			titleNotifyingHost = new TitleNotifyingHTMLHost(this);
@@ -13,11 +16,14 @@
 		
 		public function titleChanged(title:String):void
 		{
+			title = title;
 			label = title;
-			trace(title);
-
-			// update URL address bar
-			dispatchEvent(new Event("UpdateAddress"));
+		}
+		
+		public function locationChanged(locationURL:String):void
+		{
+			location = locationURL;
+			dispatchEvent(new Event(locationChangedEvent));
 		}
 	]]>
 </mx:Script>
