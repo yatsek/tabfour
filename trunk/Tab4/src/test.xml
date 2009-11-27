@@ -12,4 +12,10 @@
       <tab address="http://scholar.google.com" label="Google Scholar"/>
     </tabs>
   </context>
+  <context active="false" label="Travel">
+    <tabs label="Tabs">
+      <tab address="http://www.expedia.ca" label="Expedia"/>
+      <tab address="http://www.travelcuts.ca" label="TravelCuts"/>
+    </tabs>
+  </context>
 </contexts>
