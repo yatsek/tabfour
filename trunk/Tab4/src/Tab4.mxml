@@ -16,6 +16,7 @@
 	[Bindable]
 	public var contexts:XML;
 	public var homepage:String = "http://www.cbc.ca";
+	public var contextFilename:String = "test.xml";
 	
 	[Embed(source="./flexlib/assets/document.png")]
 	private var document_icon:Class;
@@ -35,24 +36,24 @@
 		initContexts();
 	}
 	
-	public function applicationExitHandler():void
+	public function applicationExitHandler(e:Event):void
 	{
 		saveContexts();
 	}
 	
 	public function loadContexts():void
 	{
-		var file:File = File.applicationDirectory.resolvePath("test.xml"); 
-        var fileStream:FileStream = new FileStream(); 
-        fileStream.open(file, FileMode.READ); 
+		var file:File = File.applicationDirectory.resolvePath(contextFilename);
+        var fileStream:FileStream = new FileStream();
+        fileStream.open(file, FileMode.READ);
         var stringRead:String = fileStream.readUTFBytes(fileStream.bytesAvailable);
-        contexts = XML(stringRead); 
-        fileStream.close();        
+        contexts = XML(stringRead);
+        fileStream.close();
 	}
 	
 	public function saveContexts():void
 	{
-		var file:File = new File(File.applicationDirectory.nativePath.toString() + "/test.xml");
+		var file:File = new File(File.applicationDirectory.nativePath.toString() + "/" + contextFilename);
         var fileStream:FileStream = new FileStream();
         fileStream.open(file, FileMode.WRITE);
         fileStream.writeUTFBytes(contexts.toXMLString());
@@ -64,13 +65,19 @@
 		var activeContexts:XMLList = contexts.context.(@active == 'true');
 		if( activeContexts.length() == 0 )
 		{
-    		var defaultContext:Context = addContext("Default");
+			var newContextXML:XML = <context active="true" label="Default"><tabs label="Tabs"/></context>; 
+			contexts.appendChild(newContextXML);
+    		var defaultContext:Context = addContext("Default", newContextXML);
     		addTab(homepage, defaultContext.navigator, homepage);
+    		var newTabXML:XML = <tab />;
+    		newTabXML.@address = homepage;
+    		newTabXML.@label = homepage;
+    		newContextXML.tabs[0].appendChild(newTabXML);
         } else
         {
         	for each (var activeContext:XML in activeContexts)
         	{
-                var currentContext:Context = addContext(activeContext.@label);
+                var currentContext:Context = addContext(activeContext.@label, activeContext);
                 for each (var tab:XML in activeContext.tabs.tab)
                 {
                 	addTab(tab.@label, currentContext.navigator, tab.@address);
@@ -91,7 +98,9 @@
 	
 	public function addContextWithTabBarButton(e:Event):void
 	{
-		addContext("New Group");
+		var newContextXML:XML = <context active="true" label="New Group"><tabs label="Tabs"/></context>; 
+        contexts.appendChild(newContextXML);
+		addContext("New Group", newContextXML);
 		
 		// set context focus
 		contextTabBar.selectedIndex = contextTabBar.numChildren-1;
@@ -119,7 +128,11 @@
 	
 	public function updateAddressBar(e:Event=null):void
 	{
-		addressInput.text = getCurrentTab().htmlPane.location;
+		var currentTab:Tab =  getCurrentTab()
+		if(currentTab != null)
+		{
+		  addressInput.text = currentTab.htmlPane.location;
+		}
 	}
 	
 	public function changeTabURLinFocus(address:String):void
@@ -127,12 +140,13 @@
 		getCurrentTab().htmlPane.location = address;
 	}
 	
-	private function addContext(lbl:String):Context
+	private function addContext(lbl:String, xmlRef:XML):Context
 	{
 		if(lbl=="") lbl = "(Default)";
 
 		var context:Context = new Context();
 		context.label = lbl;
+		context.xmlRef = xmlRef;
 		context.setStyle("closable", true);
 		if(icon) {
 			context.icon = icon;
