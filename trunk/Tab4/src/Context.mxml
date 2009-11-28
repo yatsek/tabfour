@@ -5,6 +5,7 @@
 <mx:Script>
 	<![CDATA[
 		public var xmlRef:XML;
+		public var addressToOpen:String;
 	]]>
 </mx:Script>
 	
