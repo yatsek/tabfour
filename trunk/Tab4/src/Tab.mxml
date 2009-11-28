@@ -36,6 +36,7 @@
 	   <mx:Label text="Zoom"/>
 	   <mx:HSlider id="zoomSlider" minimum="10" maximum="400" value="100" 
 	   	tickValues="100" snapInterval="1"
-	   	change="htmlPane.scaleX = htmlPane.scaleY = zoomSlider.value;"/>
+	   	liveDragging="true"
+	   	/>
 	</mx:HBox>
 </mx:VBox>
