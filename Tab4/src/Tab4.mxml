@@ -29,11 +29,18 @@
 	[Embed(source="./flexlib/assets/home.png")]
 	private var home_icon:Class;
 
+	// functino to handle all context menu evevnts
+	public function contextMenuEventHandler(e:ContextMenuEvent): void
+	{
+		trace(e.target.label);
+	}
+	
 	public function init():void
 	{
 		//save before exiting
 		NativeApplication.nativeApplication.addEventListener(Event.EXITING, applicationExitHandler);
 		
+		contextTabBar.setType(SuperTabNavigator.CONTEXT, contextMenuEventHandler);
 		contextTabBar.addEventListener(SuperTabNavigator.AddTabEvent, addContextWithTabBarButton);
 		contextTabBar.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);
 		contextTabBar.addEventListener(SuperTabEvent.TAB_CLOSE, contextClose);
@@ -358,7 +365,9 @@
 		else {
 			context.icon = document_icon;
 		}
+		
 		contextTabBar.addChild(context);
+		context.navigator.setType(SuperTabNavigator.TAB, contextMenuEventHandler);
 		context.navigator.addEventListener("AddTab", addTabWithTabBarButton);
 		context.navigator.addEventListener(SuperTabEvent.TAB_CLOSE, tabClose);
 		context.navigator.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);

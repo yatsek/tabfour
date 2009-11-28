@@ -142,6 +142,19 @@ package flexlib.containers
 	{
 	    public static const AddTabEvent:String = "AddTab";	    
 	    
+	    // type of supertabnavigator: context or tab?
+	    public static const CONTEXT:Number = 1;
+	    public static const TAB:Number = 2;
+	    protected var type:Number;
+	    protected var menuHandler:Function = null;
+	    public function setType(navType:Number, handler:Function): void
+	    {
+	    	type = navType;
+	    	menuHandler = handler;
+	    	
+	    	(tabBar as SuperTabBar).setType(type, menuHandler);
+	    }
+	    
 	    private var stopIndexChangeEvent:Boolean = false;
 	    /**
 	    * @private

@@ -105,6 +105,14 @@ package flexlib.controls {
 		
 		use namespace mx_internal;
 		
+	    protected var type:Number;
+	    protected var menuHandler:Function = null;
+	    public function setType(navType:Number, handler:Function): void
+	    {
+	    	type = navType;
+	    	menuHandler = handler;
+	    }
+		
 		/**
 		 * Event that is dispatched when the tabs are re-ordered in the SuperTabBar.
 		 */
@@ -269,6 +277,8 @@ package flexlib.controls {
 										icon:Class = null):IFlexDisplayObject{
 											
 			var tab:SuperTab = super.createNavItem(label,icon) as SuperTab;
+			
+			tab.setType(type, menuHandler);
 			
 			tab.closePolicy = this.closePolicy;
 			tab.doubleClickToEdit = this.editableTabLabels;
