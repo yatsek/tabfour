@@ -16,7 +16,7 @@
 	import mx.events.ListEvent;
 	[Bindable]
 	public var contexts:XML;
-	public var homepage:String = "http://www.cbc.ca";
+	public var homepage:String = "http://www.google.ca";
 	public var contextFilename:String = "test.xml";
 	
 	[Embed(source="./flexlib/assets/document.png")]
@@ -32,6 +32,7 @@
 		
 		contextTabBar.addEventListener(SuperTabNavigator.AddTabEvent, addContextWithTabBarButton);
 		contextTabBar.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);
+		contextTabBar.addEventListener(SuperTabEvent.TAB_UPDATED, contextTabRenamed);
 		
 		loadContexts();
 		initContexts();
@@ -163,6 +164,12 @@
 		{
 		  addressInput.text = currentTab.htmlPane.location;
 		}
+	}
+	
+	public function contextTabRenamed(e:SuperTabEvent):void
+	{
+		var context:Context = Context(contextTabBar.getChildAt(e.tabIndex));
+		context.xmlRef.@label = context.label; 
 	}
 	
 	private function xmlDeleteNode(xmlToDelete:XML):Boolean
