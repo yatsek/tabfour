@@ -28,5 +28,14 @@
 	]]>
 </mx:Script>
 		
-	<mx:HTML id="htmlPane" width="100%" height="100%" initialize="init()"/>
+	<mx:HTML id="htmlPane" width="100%" height="100%" 
+		initialize="init()" 
+		scaleX="{zoomSlider.value/100}" scaleY="{zoomSlider.value/100}"/>
+	<mx:HBox width="100%">
+	   <mx:Spacer width="100%" height="100%"/>
+	   <mx:Label text="Zoom"/>
+	   <mx:HSlider id="zoomSlider" minimum="10" maximum="400" value="100" 
+	   	tickValues="100" snapInterval="1"
+	   	change="htmlPane.scaleX = htmlPane.scaleY = zoomSlider.value;"/>
+	</mx:HBox>
 </mx:VBox>
