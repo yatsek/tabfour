@@ -727,6 +727,7 @@ package flexlib.containers
 	        tabBar.addEventListener(ChildExistenceChangedEvent.CHILD_ADD, tabsChanged);
 	        tabBar.addEventListener(ChildExistenceChangedEvent.CHILD_REMOVE, tabsChanged);
 	        SuperTabBar(tabBar).addEventListener(SuperTabEvent.TAB_UPDATED, tabsChanged);
+	        SuperTabBar(tabBar).addEventListener(SuperTabEvent.TAB_UPDATED, tabsUpdated);
 	        
 	        // This is a custom event that gets fired from SuperTabBar if the tabs are
 	        // dragged and reordered.
@@ -1115,11 +1116,16 @@ package flexlib.containers
 	    /**
 	    * @private
 	    * 
-	    * Listener that gets caled when a tab is added or removed.
+	    * Listener that gets called when a tab is added or removed.
 	    */
 	    private function tabsChanged(event:Event):void {
 	    	callLater(reorderTabList);
 	    }
+	    
+	    //just pass update events up
+	    private function tabsUpdated(event:SuperTabEvent):void {
+            dispatchEvent(event);
+        }
 	    
 	    /**
 	    * @private
