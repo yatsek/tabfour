@@ -5,6 +5,7 @@
 	layout="absolute" width="800" height="600" windowComplete="init()">
 <mx:Script>
 <![CDATA[
+	import flexlib.events.SuperTabEvent;
 	import mx.events.IndexChangedEvent;
 	import mx.events.MenuEvent;
 	import mx.core.Container;
@@ -34,6 +35,7 @@
 		
 		loadContexts();
 		initContexts();
+		
 	}
 	
 	public function applicationExitHandler(e:Event):void
@@ -91,6 +93,14 @@
 		for each(var obj_context:Object in contextTabBar.getChildren())
 		{
 			var c:Context = Context(obj_context);
+			
+			// if you clicked a context
+			if (c.xmlRef == data)
+			{
+				contextTabBar.selectedChild = c;
+				return;
+			}
+			
 			for each (var obj_tab:Object in c.navigator.getChildren())
 			{
 				var t:Tab = Tab(obj_tab);
@@ -137,9 +147,10 @@
 	
 	public function addTabWithTabBarButton(e:Event):void
 	{ 
-		addTab(new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" />"), getCurrentTabNavigator());
-		
-		
+		var newTabXML:XML = new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" />"); 
+        Context(contextTabBar.selectedChild).xmlRef.tabs.appendChild(newTabXML);
+
+		addTab(newTabXML, getCurrentTabNavigator());
 		
 		//set tab focus
 		getCurrentTabNavigator().selectedIndex = getCurrentTabNavigator().numChildren-1;
@@ -152,6 +163,30 @@
 		{
 		  addressInput.text = currentTab.htmlPane.location;
 		}
+	}
+	
+	private function xmlDeleteNode(xmlToDelete:XML):Boolean
+	{
+		var cn:XMLList = XMLList(xmlToDelete.parent()).children();
+     
+		for ( var i:Number = 0 ; i < cn.length() ; i++ )
+		{
+			if ( cn[i] == xmlToDelete )
+			{
+       			delete cn[i];       
+				return true;
+			}
+		}    
+		return false;
+    
+	}
+	
+	public function tabClose(e:flexlib.events.SuperTabEvent):void
+	{
+		var t:Tab = Tab(SuperTabNavigator(e.target).getChildAt(e.tabIndex));
+		var xml:XML = t.xmlObject;
+		xmlDeleteNode(xml);
+		t.xmlObject = null;
 	}
 	
 	public function changeTabURLinFocus(address:String):void
@@ -176,6 +211,7 @@
 		}
 		contextTabBar.addChild(context);
 		context.navigator.addEventListener("AddTab", addTabWithTabBarButton);
+		context.navigator.addEventListener(SuperTabEvent.TAB_CLOSE, tabClose);
 		context.navigator.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);
 		
 		return context;
