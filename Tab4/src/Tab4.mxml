@@ -68,11 +68,9 @@
 			var newContextXML:XML = <context active="true" label="Default"><tabs label="Tabs"/></context>; 
 			contexts.appendChild(newContextXML);
     		var defaultContext:Context = addContext("Default", newContextXML);
-    		addTab(new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" />"), defaultContext.navigator);
-    		var newTabXML:XML = <tab />;
-    		newTabXML.@address = homepage;
-    		newTabXML.@label = homepage;
+    		var newTabXML:XML =new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" />") 
     		newContextXML.tabs[0].appendChild(newTabXML);
+    		addTab(newTabXML, defaultContext.navigator);
         } else
         {
         	for each (var activeContext:XML in activeContexts)
@@ -117,7 +115,11 @@
 	{
 		var newContextXML:XML = <context active="true" label="New Group"><tabs label="Tabs"/></context>; 
         contexts.appendChild(newContextXML);
-		addContext("New Group", newContextXML);
+		var newContext:Context = addContext("New Group", newContextXML);
+		
+		var newTabXML:XML =new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" />") 
+        newContextXML.tabs[0].appendChild(newTabXML);
+        addTab(newTabXML, newContext.navigator);
 		
 		// set context focus
 		contextTabBar.selectedIndex = contextTabBar.numChildren-1;
@@ -222,7 +224,6 @@
 					<mx:Tree id="treeActive" x="0" y="0" width="100%" height="100%" 
 						dataProvider="{contexts.context.(@active == 'true')}"  
 						labelField="@label"
-						change="/*addressInput.text = treeActive.selectedItem.@address; changeTabURLinFocus(addressInput.text);*/"
 						doubleClickEnabled="true"
 						itemDoubleClick="activeTreeItemDoubleClicked(event)"/>					
 				</mx:Canvas>
@@ -230,7 +231,6 @@
 					<mx:Tree id="treeInactive" x="0" y="0" width="100%" height="100%" 
 						dataProvider="{contexts.context.(@active == 'false')}" 
                         labelField="@label" 
-                        change="addressInput.text = treeInactive.selectedItem.@address; changeTabURLinFocus(addressInput.text);"
                         doubleClickEnabled="true"
                         itemDoubleClick="inactiveTreeItemDoubleClicked(event)"/>
 				</mx:Canvas>
