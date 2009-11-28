@@ -6,6 +6,7 @@
 	<![CDATA[
 		public var titleNotifyingHost:HTMLHost;
 		public var title:String;
+		public var xmlObject:XML;
 		public static const locationChangedEvent:String = "LocationChanged"; 
 		public function init():void
 		{
@@ -17,6 +18,7 @@
 		{
 			title = title;
 			label = title;
+			xmlObject.@label = title;
 		}
 		
 		public function locationChanged(locationURL:String):void

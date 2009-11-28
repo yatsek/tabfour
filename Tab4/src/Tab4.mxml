@@ -68,7 +68,7 @@
 			var newContextXML:XML = <context active="true" label="Default"><tabs label="Tabs"/></context>; 
 			contexts.appendChild(newContextXML);
     		var defaultContext:Context = addContext("Default", newContextXML);
-    		addTab(homepage, defaultContext.navigator, homepage);
+    		addTab(new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" />"), defaultContext.navigator);
     		var newTabXML:XML = <tab />;
     		newTabXML.@address = homepage;
     		newTabXML.@label = homepage;
@@ -80,7 +80,7 @@
                 var currentContext:Context = addContext(activeContext.@label, activeContext);
                 for each (var tab:XML in activeContext.tabs.tab)
                 {
-                	addTab(tab.@label, currentContext.navigator, tab.@address);
+                	addTab(tab, currentContext.navigator);
                 }
         	}
         }
@@ -88,7 +88,24 @@
 	
 	public function activeTreeItemDoubleClicked(e:ListEvent):void
 	{
-		trace(XML(e.itemRenderer.data).localName());
+		var data:XML = XML(e.itemRenderer.data);
+		
+		for each(var obj_context:Object in contextTabBar.getChildren())
+		{
+			var c:Context = Context(obj_context);
+			for each (var obj_tab:Object in c.navigator.getChildren())
+			{
+				var t:Tab = Tab(obj_tab);
+				
+				// found the target
+				if (t.xmlObject == data)
+				{
+					contextTabBar.selectedChild = c;
+					c.navigator.selectedChild = t;
+					return;
+				}
+			}
+		}	
 	}
 	
 	public function inactiveTreeItemDoubleClicked(e:ListEvent):void
@@ -118,7 +135,7 @@
 	
 	public function addTabWithTabBarButton(e:Event):void
 	{ 
-		addTab(homepage, getCurrentTabNavigator(), homepage);
+		addTab(new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" />"), getCurrentTabNavigator());
 		
 		
 		
@@ -138,6 +155,7 @@
 	public function changeTabURLinFocus(address:String):void
 	{
 		getCurrentTab().htmlPane.location = address;
+		getCurrentTab().xmlObject.@address = address;
 	}
 	
 	private function addContext(lbl:String, xmlRef:XML):Context
@@ -161,13 +179,16 @@
 		return context;
 	}
 	
-	private function addTab(lbl:String, navigator:SuperTabNavigator, address:String, icon:Class=null):Tab 
+	private function addTab(xmlObj:XML, navigator:SuperTabNavigator, icon:Class=null):Tab 
 	{
-		if(lbl=="") lbl = "(Untitled)";
+		if(xmlObj==null)
+		{
+			xmlObj = new XML("<tab label=\"(untitled)\" address=\"" + homepage + "\" />");
+		}
 		
 		var tab:Tab = new Tab();
 		tab.setStyle("closable", true);
-		tab.label = lbl;
+		tab.label = xmlObj.@label;
 		if(icon) {
 			tab.icon = icon;
 		}
@@ -176,7 +197,8 @@
 		}
 		tab.addEventListener(Tab.locationChangedEvent, locationChanged);
 		navigator.addChild(tab);
-		tab.htmlPane.location = address;
+		tab.htmlPane.location = xmlObj.@address;
+		tab.xmlObject = xmlObj;
 		
 		return tab;
 	}
@@ -200,7 +222,7 @@
 					<mx:Tree id="treeActive" x="0" y="0" width="100%" height="100%" 
 						dataProvider="{contexts.context.(@active == 'true')}"  
 						labelField="@label"
-						change="addressInput.text = treeActive.selectedItem.@address; changeTabURLinFocus(addressInput.text);"
+						change="/*addressInput.text = treeActive.selectedItem.@address; changeTabURLinFocus(addressInput.text);*/"
 						doubleClickEnabled="true"
 						itemDoubleClick="activeTreeItemDoubleClicked(event)"/>					
 				</mx:Canvas>
