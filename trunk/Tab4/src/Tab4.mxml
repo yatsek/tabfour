@@ -19,6 +19,9 @@
 	public var contexts:XML;
 	public var homepage:String = "http://www.google.ca";
 	public var contextFilename:String = "test.xml";
+	public var currentListIndex:int = -1;
+	
+	private var floatPanelTimer:Timer;
 	
 	[Embed(source="./flexlib/assets/document.png")]
 	private var document_icon:Class;
@@ -39,6 +42,10 @@
 		
 		loadContexts();
 		initContexts();
+		
+		floatPanelTimer = new Timer(250);
+		floatPanelTimer.addEventListener(TimerEvent.TIMER, floatPanelTimerTimeout);
+		floatPanelTimer.start();
 		
 	}
 	
@@ -387,6 +394,63 @@
 	{
 		updateAddressBar();
 	}
+	
+	
+	/* this part is related to the quick info panel
+	 * Tao Su
+	 */
+	 
+	public function listMouseMove(event:Event):void
+	{
+		if (event.type != flash.events.MouseEvent.MOUSE_MOVE) return;
+		if (floatPanel.visible)
+			floatPanel.move(sidebar.x + sidebar.width, flash.events.MouseEvent(event).stageY);
+			
+	}
+	
+	public function floatPanelTimerTimeout(event:TimerEvent):void
+	{
+		floatPanel.visible = currentListIndex >=0;
+	}
+		
+	public function listMouseOver(event:Event):void
+	{
+		//if (event.type != flash.events.MouseEvent.MOUSE_OVER) return;
+		//floatbox.visible = true;
+	}
+		
+	public function listMouseOut(event:Event):void
+	{
+		//if (event.type != flash.events.MouseEvent.MOUSE_OUT) return;
+		//floatbox.visible = false;
+	}
+		
+	public function listItemRollOver(event:ListEvent):void 
+	{
+		if (event.type != mx.events.ListEvent.ITEM_ROLL_OVER) return;
+		currentListIndex = event.rowIndex;
+		
+		var xml:XML = XML(event.itemRenderer.data);
+		
+		floatPanel.title = xml.@label;
+		if (xml.attribute("address") != null)
+			htmlPreviewPane.location = xml.@address;
+		else
+			htmlPreviewPane.location = "about:blank";
+		//floatbox.dataProvider = event.itemRenderer.data;
+	}
+
+	public function listItemRollOut(event:Event):void 
+	{
+		if (event.type != mx.events.ListEvent.ITEM_ROLL_OUT) return;
+		currentListIndex = -1;
+		//htmlPreviewPane.location = "";
+    }
+	 
+	/*
+	 * end : quick info panel
+	 */
+	
 ]]>
 </mx:Script>
 
@@ -397,20 +461,32 @@
 			<mx:Button label="Go" width="42" height="24" click="changeTabURLinFocus(addressInput.text);"/>
 		</mx:HBox>
 		<mx:HDividedBox width="100%" height="100%">
-			<mx:Accordion width="150" height="100%">
+			<mx:Accordion id="sidebar" width="150" height="100%">
 				<mx:Canvas label="Active" width="100%" height="100%">
 					<mx:Tree id="treeActive" x="0" y="0" width="100%" height="100%" 
 						dataProvider="{contexts.context.(@active == 'true')}"  
 						labelField="@label"
 						doubleClickEnabled="true"
-						itemDoubleClick="activeTreeItemDoubleClicked(event)"/>					
+						itemDoubleClick="activeTreeItemDoubleClicked(event)"
+						itemRollOver="listItemRollOver(event)"
+						itemRollOut="listItemRollOut(event)"
+						mouseOver="listMouseOver(event)"
+						mouseOut="listMouseOut(event)"
+						mouseMove="listMouseMove(event)"
+						/>					
 				</mx:Canvas>
 				<mx:Canvas label="Inactive" width="100%" height="100%">
 					<mx:Tree id="treeInactive" x="0" y="0" width="100%" height="100%" 
 						dataProvider="{contexts.context.(@active == 'false')}" 
                         labelField="@label" 
                         doubleClickEnabled="true"
-                        itemDoubleClick="inactiveTreeItemDoubleClicked(event)"/>
+                        itemDoubleClick="inactiveTreeItemDoubleClicked(event)"
+						itemRollOver="listItemRollOver(event)"
+						itemRollOut="listItemRollOut(event)"
+						mouseOver="listMouseOver(event)"
+						mouseOut="listMouseOut(event)"
+						mouseMove="listMouseMove(event)"
+                        />
 				</mx:Canvas>
 				
 			</mx:Accordion>
@@ -420,4 +496,15 @@
 				closePolicy="{SuperTab.CLOSE_ALWAYS}"/>
 		</mx:HDividedBox>
 	</mx:VBox>
+	
+	<mx:Fade id="show" alphaFrom="0" alphaTo="1" duration="200"/>
+	<mx:Fade id="hide" alphaFrom="1" alphaTo="0"  duration="200"/>
+	<mx:Panel id="floatPanel" x="200" y="28"  visible="false" width="300" height="200" layout="absolute"
+		showEffect="{show}" hideEffect="{hide}" >
+		
+		<mx:HTML id="htmlPreviewPane" width="100%" height="100%" 
+		scaleX="0.25" scaleY="0.25"/>
+
+	</mx:Panel>
+
 </mx:WindowedApplication>
