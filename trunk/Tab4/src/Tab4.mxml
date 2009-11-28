@@ -239,6 +239,9 @@
 	
 	public function tabClose(e:flexlib.events.SuperTabEvent):void
 	{
+		if (SuperTabNavigator(e.target).getChildren().length <= 1)
+			return;
+			
 		var t:Tab = Tab(SuperTabNavigator(e.target).getChildAt(e.tabIndex));
 		var xml:XML = t.xmlObject;
 		xmlDeleteNode(xml);
@@ -247,6 +250,9 @@
 	
 	public function contextClose(e:flexlib.events.SuperTabEvent):void
 	{
+		if (SuperTabNavigator(e.target).getChildren().length <= 1)
+			return;
+		
 		var c:Context = Context(SuperTabNavigator(e.target).getChildAt(e.tabIndex));
 		var xml:XML = c.xmlRef;
 		xml.@active = "false";
