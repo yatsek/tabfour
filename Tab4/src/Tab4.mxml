@@ -90,6 +90,18 @@
         }
 	}
 	
+	public function getParentWithLocalName(localName:String, object:XML):XML
+	{
+		while (object.localName() != localName)
+		{
+			object = object.parent();
+			if (object == null)
+ 				break;
+		}
+ 			
+		return object;
+	}
+	
 	public function focusContextAndTab(target:XML):void
 	{
 		var data:XML = target;
@@ -124,7 +136,22 @@
 	{
 		var data:XML = XML(e.itemRenderer.data);
 	
-		focusContextAndTab(data);
+		if (data.localName() == "context" || data.localName() == "tab")
+		{
+			focusContextAndTab(data);
+		}
+		
+		if (data.localName() == "bookmark")
+		{
+ 			var context:XML = data;
+ 			
+ 			context = getParentWithLocalName("context", data);
+ 			if (context == null) return;
+ 			
+ 			focusContextAndTab(context);
+ 			addNewTabToCurrentContext(data.@address);
+		}
+	
 	}
 	
 	public function focusAfterCreation(e:FlexEvent):void
@@ -142,18 +169,13 @@
 		}
 	}
 	
-	public function inactiveTreeItemDoubleClicked(e:ListEvent):void
-    {
- 		var context:XML = XML(e.itemRenderer.data);
- 		var node:XML = XML(e.itemRenderer.data);
+	public function activateContextAndTab(node:XML): Context
+	{
+ 		var context:XML = node;
  		
  		
- 		while (context.localName() != "context")
- 		{
- 			context = context.parent();
- 			if (context == null)
- 				return;
- 		}
+ 		context = getParentWithLocalName("context", context);
+ 		if (context == null) return null;
  		
         var currentContext:Context = addContext(context.@label, context);
         currentContext.addEventListener(mx.events.FlexEvent.CREATION_COMPLETE, focusAfterCreation);
@@ -168,6 +190,47 @@
         }
 
 		context.@active="true";  
+		
+		return currentContext;
+	}
+	
+	public function openTabAfterCreation(e:FlexEvent):void
+	{
+		if (e.target is Context)
+		{
+			var c:Context = e.target as Context;
+			if (c.addressToOpen != "")
+			{
+				addNewTabToContext(c, c.addressToOpen);
+				c.addressToOpen = "";
+			}
+		}
+	}
+	
+	public function inactiveTreeItemDoubleClicked(e:ListEvent):void
+    {
+		var data:XML = XML(e.itemRenderer.data);
+	
+		if (data.localName() == "context" || data.localName() == "tab")
+		{
+			activateContextAndTab(data);
+		}
+		
+		if (data.localName() == "bookmark")
+		{
+ 			var context:XML = data;
+ 			
+ 			context = getParentWithLocalName("context", data);
+ 			if (context == null) return;
+ 			
+ 			var activatedContext:Context = activateContextAndTab(context);
+ 			if (activatedContext == null) return;
+ 			
+ 			activatedContext.addressToOpen = data.@address;
+ 			activatedContext.addEventListener(mx.events.FlexEvent.CREATION_COMPLETE, openTabAfterCreation);
+			
+		}
+
 
    }
 	
@@ -195,15 +258,25 @@
 		return Tab(getCurrentTabNavigator().selectedChild);
 	}
 	
-	public function addTabWithTabBarButton(e:Event):void
-	{ 
-		var newTabXML:XML = new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" />"); 
-        Context(contextTabBar.selectedChild).xmlRef.tabs.appendChild(newTabXML);
+	public function addNewTabToContext(context:Context, address:String):void
+	{
+		var newTabXML:XML = new XML("<tab label=\"" + address + "\" address=\"" + address + "\" />"); 
+        context.xmlRef.tabs.appendChild(newTabXML);
 
 		addTab(newTabXML, getCurrentTabNavigator());
 		
 		//set tab focus
 		getCurrentTabNavigator().selectedIndex = getCurrentTabNavigator().numChildren-1;
+	}
+	
+	public function addNewTabToCurrentContext(address:String):void
+	{
+		addNewTabToContext(Context(contextTabBar.selectedChild), address);
+	}
+	
+	public function addTabWithTabBarButton(e:Event):void
+	{
+		addNewTabToCurrentContext(homepage);
 	}
 	
 	public function updateAddressBar(e:Event=null):void

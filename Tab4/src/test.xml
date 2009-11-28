@@ -5,6 +5,10 @@
       <tab address="http://www.cnn.com" label="CNN"/>
       <tab address="http://www.xkcd.org" label="XKCD"/>
     </tabs>
+    <bookmarks label="Bookmarks">
+      <bookmark address="http://www.google.com" label="Google"/>
+      <bookmark address="http://maps.google.com" label="Google Map"/>
+    </bookmarks>
   </context>
   <context active="true" label="Work">
     <tabs label="Tabs">
