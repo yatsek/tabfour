@@ -5,6 +5,7 @@
 	layout="absolute" width="800" height="600" windowComplete="init()">
 <mx:Script>
 <![CDATA[
+	import mx.events.FlexEvent;
 	import flexlib.events.SuperTabEvent;
 	import mx.events.IndexChangedEvent;
 	import mx.events.MenuEvent;
@@ -32,6 +33,8 @@
 		
 		contextTabBar.addEventListener(SuperTabNavigator.AddTabEvent, addContextWithTabBarButton);
 		contextTabBar.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);
+		contextTabBar.addEventListener(SuperTabEvent.TAB_CLOSE, contextClose);
+	
 		contextTabBar.addEventListener(SuperTabEvent.TAB_UPDATED, contextTabRenamed);
 		
 		loadContexts();
@@ -87,9 +90,9 @@
         }
 	}
 	
-	public function activeTreeItemDoubleClicked(e:ListEvent):void
+	public function focusContextAndTab(target:XML):void
 	{
-		var data:XML = XML(e.itemRenderer.data);
+		var data:XML = target;
 		
 		for each(var obj_context:Object in contextTabBar.getChildren())
 		{
@@ -117,10 +120,56 @@
 		}	
 	}
 	
+	public function activeTreeItemDoubleClicked(e:ListEvent):void
+	{
+		var data:XML = XML(e.itemRenderer.data);
+	
+		focusContextAndTab(data);
+	}
+	
+	public function focusAfterCreation(e:FlexEvent):void
+	{
+		if (e.target is Tab)
+		{
+			var t:Tab = Tab(e.target);
+			SuperTabNavigator(t.parent).selectedChild = t;
+		}
+		
+		if (e.target is Context)
+		{
+			var c:Context = Context(e.target);
+			SuperTabNavigator(c.parent).selectedChild = c;
+		}
+	}
+	
 	public function inactiveTreeItemDoubleClicked(e:ListEvent):void
     {
-        trace(XML(e.itemRenderer.data).localName());
-    }
+ 		var context:XML = XML(e.itemRenderer.data);
+ 		var node:XML = XML(e.itemRenderer.data);
+ 		
+ 		
+ 		while (context.localName() != "context")
+ 		{
+ 			context = context.parent();
+ 			if (context == null)
+ 				return;
+ 		}
+ 		
+        var currentContext:Context = addContext(context.@label, context);
+        currentContext.addEventListener(mx.events.FlexEvent.CREATION_COMPLETE, focusAfterCreation);
+       
+        for each (var tab:XML in context.tabs.tab)
+        {
+        	var tabpage:Tab = addTab(tab, currentContext.navigator);
+        	if (tab==node)
+        	{
+        		tabpage.addEventListener(mx.events.FlexEvent.CREATION_COMPLETE, focusAfterCreation);
+        	}   
+        }
+
+		context.@active="true";  
+
+   }
 	
 	public function addContextWithTabBarButton(e:Event):void
 	{
@@ -194,6 +243,13 @@
 		var xml:XML = t.xmlObject;
 		xmlDeleteNode(xml);
 		t.xmlObject = null;
+	}
+	
+	public function contextClose(e:flexlib.events.SuperTabEvent):void
+	{
+		var c:Context = Context(SuperTabNavigator(e.target).getChildAt(e.tabIndex));
+		var xml:XML = c.xmlRef;
+		xml.@active = "false";
 	}
 	
 	public function changeTabURLinFocus(address:String):void
