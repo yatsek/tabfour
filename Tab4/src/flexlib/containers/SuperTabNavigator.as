@@ -245,6 +245,11 @@ package flexlib.containers
 		[Embed (source="../assets/assets.swf", symbol="right_arrow")]
 		private static var DEFAULT_RIGHT_BUTTON:Class;
 		
+		public function getTabBar():SuperTabBar {
+			return tabBar as SuperTabBar;
+		}
+		
+		
 		/**
 		 * @private
 		 * Our internal variable to keep track of the policy to show the Button
