@@ -35,6 +35,7 @@ package flexlib.controls.tabBarClasses
 	import flash.ui.ContextMenuItem;
 	
 	import flexlib.containers.SuperTabNavigator;
+	import flexlib.events.RightClickMenuEvent;
 	import flexlib.events.SuperTabEvent;
 	
 	import mx.controls.Button;
@@ -134,12 +135,19 @@ package flexlib.controls.tabBarClasses
 			for( var i:Number= 0; i<itemArray.length; i++ )
 			{
 				var menuItem:ContextMenuItem = new ContextMenuItem(itemArray[i]);
-				menuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, menuHandler);
+				menuItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, dispatchMenuEvent);
+				this.addEventListener(RightClickMenuEvent.RIGHT_CLICK, menuHandler);
 			
 				customContextMenu.customItems.push(menuItem);	
 			}
 			
 			this.contextMenu = customContextMenu;
+		}
+		
+		private function dispatchMenuEvent(e:ContextMenuEvent):void
+		{
+			var rightClickEvent:RightClickMenuEvent = new RightClickMenuEvent(RightClickMenuEvent.RIGHT_CLICK, this, e.target.label);
+			dispatchEvent(rightClickEvent);
 		}
 		
 		private var _closePolicy:String;

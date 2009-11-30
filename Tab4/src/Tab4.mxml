@@ -7,6 +7,7 @@
 <![CDATA[
 	import mx.events.FlexEvent;
 	import flexlib.events.SuperTabEvent;
+	import flexlib.events.RightClickMenuEvent;
 	import mx.events.IndexChangedEvent;
 	import mx.events.MenuEvent;
 	import mx.core.Container;
@@ -30,9 +31,34 @@
 	private var home_icon:Class;
 
 	// functino to handle all context menu evevnts
-	public function contextMenuEventHandler(e:ContextMenuEvent): void
+	public function contextMenuEventHandler(e:RightClickMenuEvent): void
 	{
-		trace(e.target.label);
+		trace(e.target.toString());
+		trace(e.clickedItem);
+		// right click menu handler
+		switch(e.clickedItem)
+		{
+			case "Add Context":
+				contextTabBar.dispatchEvent(new Event(SuperTabNavigator.AddTabEvent));
+				break;
+			case "Add Tab":
+				Context(contextTabBar.selectedChild).navigator.dispatchEvent(new Event(SuperTabNavigator.AddTabEvent));
+				break;
+			case "Rename Context":
+				e.clickedTab.editableLabel= true;
+				break;
+			case "Hibernate Context":
+			case "Hibernate Tab":
+				e.clickedTab.dispatchEvent(new Event(SuperTab.CLOSE_TAB_EVENT));
+				break;
+			case "Bookmark Tab":
+				break;	
+			case "Delete Context":
+				break;
+			case "Delete Tab":
+				break;
+		}
+		
 	}
 	
 	public function init():void
@@ -368,7 +394,7 @@
 		
 		contextTabBar.addChild(context);
 		context.navigator.setType(SuperTabNavigator.TAB, contextMenuEventHandler);
-		context.navigator.addEventListener("AddTab", addTabWithTabBarButton);
+		context.navigator.addEventListener(SuperTabNavigator.AddTabEvent, addTabWithTabBarButton);
 		context.navigator.addEventListener(SuperTabEvent.TAB_CLOSE, tabClose);
 		context.navigator.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);
 		
