@@ -505,35 +505,38 @@
 			<mx:Button label="Go" width="42" height="24" click="changeTabURLinFocus(addressInput.text);"/>
 		</mx:HBox>
 		<mx:HDividedBox width="100%" height="100%">
-			<mx:Accordion id="sidebar" width="150" height="100%">
-				<mx:Canvas label="Active" width="100%" height="100%">
-					<mx:Tree id="treeActive" x="0" y="0" width="100%" height="100%" 
-						dataProvider="{contexts.context.(@active == 'true')}"  
-						labelField="@label"
-						doubleClickEnabled="true"
-						itemDoubleClick="activeTreeItemDoubleClicked(event)"
-						itemRollOver="listItemRollOver(event)"
-						itemRollOut="listItemRollOut(event)"
-						mouseOver="listMouseOver(event)"
-						mouseOut="listMouseOut(event)"
-						mouseMove="listMouseMove(event)"
-						/>					
-				</mx:Canvas>
-				<mx:Canvas label="Inactive" width="100%" height="100%">
-					<mx:Tree id="treeInactive" x="0" y="0" width="100%" height="100%" 
-						dataProvider="{contexts.context.(@active == 'false')}" 
-                        labelField="@label" 
-                        doubleClickEnabled="true"
-                        itemDoubleClick="inactiveTreeItemDoubleClicked(event)"
-						itemRollOver="listItemRollOver(event)"
-						itemRollOut="listItemRollOut(event)"
-						mouseOver="listMouseOver(event)"
-						mouseOut="listMouseOut(event)"
-						mouseMove="listMouseMove(event)"
-                        />
-				</mx:Canvas>
-				
-			</mx:Accordion>
+			<mx:VDividedBox id="sidebar" width="150" height="100%">
+				<mx:Accordion width="100%" height="100%" >
+					<mx:Canvas label="Active" width="100%" height="100%">
+						<mx:Tree id="treeActive" x="0" y="0" width="100%" height="100%" 
+							dataProvider="{contexts.context.(@active == 'true')}"  
+							labelField="@label"
+							doubleClickEnabled="true"
+							itemDoubleClick="activeTreeItemDoubleClicked(event)"
+							itemRollOver="listItemRollOver(event)"
+							itemRollOut="listItemRollOut(event)"
+							mouseOver="listMouseOver(event)"
+							mouseOut="listMouseOut(event)"
+							mouseMove="listMouseMove(event)"
+							/>					
+					</mx:Canvas>
+				</mx:Accordion>
+				<mx:Accordion width="100%" height="100%" >
+					<mx:Canvas label="Inactive" width="100%" height="100%">
+						<mx:Tree id="treeInactive" x="0" y="0" width="100%" height="100%" 
+							dataProvider="{contexts.context.(@active == 'false')}" 
+	                        labelField="@label" 
+	                        doubleClickEnabled="true"
+	                        itemDoubleClick="inactiveTreeItemDoubleClicked(event)"
+							itemRollOver="listItemRollOver(event)"
+							itemRollOut="listItemRollOut(event)"
+							mouseOver="listMouseOver(event)"
+							mouseOut="listMouseOut(event)"
+							mouseMove="listMouseMove(event)"
+	                        />
+					</mx:Canvas>
+				</mx:Accordion>
+			</mx:VDividedBox>
 			<flexlib:SuperTabNavigator id="contextTabBar" scrollSpeed="25" dropShadowEnabled="true"
 				stopScrollingEvent="{MouseEvent.MOUSE_OUT}" startScrollingEvent="{MouseEvent.MOUSE_OVER}"
 				width="100%" height="100%" horizontalGap="0" editableTabLabels="true"
