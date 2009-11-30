@@ -42,7 +42,7 @@
 				contextTabBar.dispatchEvent(new Event(SuperTabNavigator.AddTabEvent));
 				break;
 			case "Add Tab":
-				Context(contextTabBar.selectedChild).navigator.dispatchEvent(new Event(SuperTabNavigator.AddTabEvent));
+				getCurrentTabNavigator().dispatchEvent(new Event(SuperTabNavigator.AddTabEvent));
 				break;
 			case "Rename Context":
 				e.clickedTab.editableLabel= true;
@@ -52,6 +52,9 @@
 				e.clickedTab.dispatchEvent(new Event(SuperTab.CLOSE_TAB_EVENT));
 				break;
 			case "Bookmark Tab":
+				var tabIndex:Number = getCurrentTabNavigator().getTabBar().getChildIndex(e.clickedTab);
+				var tabAddress:String = Tab(getCurrentTabNavigator().getChildAt(tabIndex)).htmlPane.location;
+				addBookmarkToContext(Context(contextTabBar.selectedChild), e.clickedTab.label, tabAddress);
 				break;	
 			case "Delete Context":
 				break;
@@ -296,6 +299,12 @@
 	public function getCurrentTab():Tab
 	{
 		return Tab(getCurrentTabNavigator().selectedChild);
+	}
+	
+	public function addBookmarkToContext(context:Context, label:String, address:String): void
+	{
+		var newBookmarkXML:XML = new XML("<bookmark label=\"" + label + "\" address=\"" + address + "\" />"); 
+        context.xmlRef.bookmarks.appendChild(newBookmarkXML);
 	}
 	
 	public function addNewTabToContext(context:Context, address:String):void
