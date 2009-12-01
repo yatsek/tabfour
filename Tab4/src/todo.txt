@@ -1,7 +1,9 @@
 Complete preview panel
 Removing bookmarks
 Right-click menu
-Bookmark toolbar
-Bookmark toolbar manager?
 Sharing
- 
+Forward/backward/refresh/home buttons
+*Bookmark toolbar
+*Bookmark toolbar manager?
+*Search box?
+*Open links in page / new tab
