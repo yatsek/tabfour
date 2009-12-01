@@ -2,7 +2,8 @@ Complete preview panel
 Removing bookmarks
 Right-click menu
 Sharing
-Forward/backward/refresh/home buttons
+Forward/backward/refresh/home buttons.......done
+Forward/backward histories..................done
 *Bookmark toolbar
 *Bookmark toolbar manager?
 *Search box?

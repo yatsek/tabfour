@@ -2,7 +2,8 @@
 <mx:WindowedApplication 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:flexlib="flexlib.containers.*"
-	layout="absolute" width="800" height="600" windowComplete="init()">
+	layout="absolute" width="800" height="600" windowComplete="init()"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off">
 <mx:Script>
 <![CDATA[
 	import mx.utils.URLUtil;
@@ -80,7 +81,7 @@
 		loadContexts();
 		initContexts();
 		
-		floatPanelTimer = new Timer(250);
+		floatPanelTimer = new Timer(500);
 		floatPanelTimer.addEventListener(TimerEvent.TIMER, floatPanelTimerTimeout);
 		floatPanelTimer.start();
 		
@@ -457,8 +458,7 @@
 	public function listMouseMove(event:Event):void
 	{
 		if (event.type != flash.events.MouseEvent.MOUSE_MOVE) return;
-		if (floatPanel.visible)
-			floatPanel.move(sidebar.x + sidebar.width, flash.events.MouseEvent(event).stageY);
+		floatPanel.move(sidebar.x + sidebar.width, flash.events.MouseEvent(event).stageY);
 			
 	}
 	
@@ -475,8 +475,11 @@
 		
 	public function listMouseOut(event:Event):void
 	{
-		//if (event.type != flash.events.MouseEvent.MOUSE_OUT) return;
-		//floatbox.visible = false;
+		//currentListIndex = -1;
+		
+		//floatPanelTimer.stop();
+		//floatPanelTimer.start();
+
 	}
 		
 	public function listItemRollOver(event:ListEvent):void 
@@ -486,20 +489,41 @@
 		
 		var xml:XML = XML(event.itemRenderer.data);
 		
-		floatPanel.title = xml.@label;
-		if (xml.attribute("address") != null)
-			htmlPreviewPane.location = xml.@address;
+		var count:int = 1;
+		if (xml.localName()=="context")
+			count = xml.tabs.children().length();
+		else if (xml.localName()=="tabs")
+			count = xml.children().length();
+		else if (xml.localName()=="bookmarks")
+			count = xml.children().length();
 		else
-			htmlPreviewPane.location = "about:blank";
+			count = 1;
+		
+		floatPanel.title = xml.@label + " (" + count + ")";
+		
+		textComment.data = xml.@comment;
+		
+		var axml:XML = xml;
 			
-		//floatbox.dataProvider = event.itemRenderer.data;
+		while (axml.attribute("address").length() == 0 && axml.children().length() > 0)
+			axml = axml.children()[0];
+			
+		htmlPreviewPane.location = axml.@address;
+			
+		floatPanelTimer.stop();
+		floatPanelTimer.start();
+
 	}
 
 	public function listItemRollOut(event:Event):void 
 	{
 		if (event.type != mx.events.ListEvent.ITEM_ROLL_OUT) return;
 		currentListIndex = -1;
-		//htmlPreviewPane.location = "";
+		
+		floatPanelTimer.stop();
+		floatPanelTimer.start();
+		
+		
     }
 	 
 	/*
@@ -599,8 +623,8 @@
 ]]>
 </mx:Script>
 
-	<mx:VBox x="9" y="9" width="100%" height="100%">
-		<mx:HBox width="100%" height="25">
+	<mx:VBox x="9" y="9" width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+		<mx:HBox width="100%" height="25" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 			<mx:PopUpMenuButton label="B" id="backButton" click="currentPageBack();"
 				labelField="@label" showRoot="false" itemClick="historyItemClick(event);"
 				open="historyMenuOpen(event);"/>
@@ -613,8 +637,8 @@
 			<mx:TextInput width="100%" height="25" id="addressInput" enter="changeTabURLinFocus(addressInput.text);"/>
 			<mx:Button label="Go" width="42" height="24" click="changeTabURLinFocus(addressInput.text);"/>
 		</mx:HBox>
-		<mx:HDividedBox width="100%" height="100%">
-			<mx:VDividedBox id="sidebar" width="150" height="100%">
+		<mx:HDividedBox width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+			<mx:VDividedBox id="sidebar" width="150" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 				<mx:Accordion width="100%" height="100%" >
 					<mx:Canvas label="Active" width="100%" height="100%">
 						<mx:Tree id="treeActive" x="0" y="0" width="100%" height="100%" 
@@ -655,11 +679,14 @@
 	
 	<mx:Fade id="showFade" alphaFrom="0" alphaTo="1" duration="200"/>
 	<mx:Fade id="hideFade" alphaFrom="1" alphaTo="0"  duration="200"/>
-	<mx:Panel id="floatPanel" x="200" y="28"  visible="false" width="300" height="200" layout="absolute"
-		showEffect="{showFade}" hideEffect="{hideFade}" >
+	<mx:Panel id="floatPanel" x="73" y="-13"  visible="false" width="300" height="300" layout="absolute"
+		showEffect="{showFade}" hideEffect="{hideFade}"  horizontalScrollPolicy="off" verticalScrollPolicy="off">
 		
-		<mx:HTML id="htmlPreviewPane" width="100%" height="100%" 
-		scaleX="0.25" scaleY="0.25"/>
+		<mx:VBox id="floatPanelBox" width="100%" height="100%" >
+			<mx:HTML id="htmlPreviewPane" width="100%" height="74%" 
+				scaleX="0.25" scaleY="0.25"/>
+			<mx:TextArea id="textComment" width="100%" height="25%" editable="false" borderThickness="0" />
+		</mx:VBox>
 
 	</mx:Panel>
 
