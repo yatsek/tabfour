@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <contexts>
-  <context active="true" label="Fun">
+  <context active="true" label="Fun" comment="This is a hello world comment">
     <tabs label="Tabs">
       <tab address="http://www.cnn.com" label="CNN"/>
       <tab address="http://www.xkcd.org" label="XKCD"/>
     </tabs>
-    <bookmarks label="Bookmarks">
+    <bookmarks label="Bookmarks" comment="Basically, I can comment anything">
       <bookmark address="http://www.google.com" label="Google"/>
       <bookmark address="http://maps.google.com" label="Google Map"/>
     </bookmarks>
