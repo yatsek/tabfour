@@ -5,6 +5,7 @@
 	layout="absolute" width="800" height="600" windowComplete="init()">
 <mx:Script>
 <![CDATA[
+	import mx.utils.URLUtil;
 	import mx.events.FlexEvent;
 	import flexlib.events.SuperTabEvent;
 	import flexlib.events.RightClickMenuEvent;
@@ -289,6 +290,8 @@
 		
 		// set context focus
 		contextTabBar.selectedIndex = contextTabBar.numChildren-1;
+		
+		treeInactive.dataProvider=contexts.context.(@active == 'false');
 	}
 	
 	public function getCurrentTabNavigator():SuperTabNavigator
@@ -327,10 +330,13 @@
 	{
 		addNewTabToCurrentContext(homepage);
 	}
-	
+		
 	public function updateAddressBar(e:Event=null):void
 	{
-		var currentTab:Tab =  getCurrentTab()
+		var currentTab:Tab =  getCurrentTab();
+			
+		updateHistoryList();
+
 		if(currentTab != null)
 		{
 		  addressInput.text = currentTab.htmlPane.location;
@@ -382,6 +388,10 @@
 	
 	public function changeTabURLinFocus(address:String):void
 	{
+		var p:String = URLUtil.getProtocol(address);
+		if (p == "")
+			address = "http:\/\/" + address;
+			
 		getCurrentTab().htmlPane.location = address;
 		getCurrentTab().xmlObject.@address = address;
 	}
@@ -481,6 +491,7 @@
 			htmlPreviewPane.location = xml.@address;
 		else
 			htmlPreviewPane.location = "about:blank";
+			
 		//floatbox.dataProvider = event.itemRenderer.data;
 	}
 
@@ -494,13 +505,111 @@
 	/*
 	 * end : quick info panel
 	 */
+	 
+	/*
+	 * Control tool bar functions 
+	 */
+	 
+	public function currentPageBack():void
+	{
+		var currentTab:Tab =  getCurrentTab()
+		if(currentTab != null)
+		{
+		  	currentTab.htmlPane.historyBack();
+			updateHistoryList();
+		}	
+	}
+	
+	public function currentPageForward():void
+	{
+		var currentTab:Tab =  getCurrentTab()
+		if(currentTab != null)
+		{
+		  currentTab.htmlPane.historyForward();
+			updateHistoryList();
+		}	
+	}
+	
+	public function currentPageRefresh():void
+	{
+		var currentTab:Tab =  getCurrentTab()
+		if(currentTab != null)
+		{
+		  currentTab.htmlPane.reload();
+			updateHistoryList();
+		}	
+	}
+	
+	
+	public function currentPageStop():void
+	{
+		var currentTab:Tab =  getCurrentTab()
+		if(currentTab != null)
+		{
+		  currentTab.htmlPane.cancelLoad();
+		}	
+	}
+	
+	public function currentPageHome():void
+	{
+		changeTabURLinFocus(homepage);	
+			updateHistoryList();
+	}
+	
+	public function historyItemClick(e:MenuEvent):void
+	{
+		var currentTab:Tab =  getCurrentTab()
+		if(currentTab != null)
+		{
+		  currentTab.htmlPane.historyGo(e.item.@pos - currentTab.htmlPane.historyPosition);
+		}	
+	}
+	
+	public function updateHistoryList():void
+	{
+		var currentTab:Tab =  getCurrentTab();
+		
+		// update history list besides address bar
+		var currentHistory:XML = new XML("<history></history>");
+		
+		for (var i:int=0; i< currentTab.htmlPane.historyLength; i++)
+		{
+			var t:String = currentTab.htmlPane.getHistoryAt(i).title;
+			if (i == currentTab.htmlPane.historyPosition)
+				t = "* "+ t;
+			else
+				t = "  "+ t;
+			currentHistory.appendChild(new XML("<historyItem label=\"" + t + "\" pos=\"" + i + "\"/>"));
+		}
+		
+		backButton.dataProvider = currentHistory;
+		forwardButton.dataProvider = currentHistory;
+	}
+
+	public function historyMenuOpen(e:Event):void
+	{
+		updateHistoryList();
+	}
+	
+	/*
+	 * end : control toolbar functions
+	 */
+	
 	
 ]]>
 </mx:Script>
 
 	<mx:VBox x="9" y="9" width="100%" height="100%">
 		<mx:HBox width="100%" height="25">
-			<mx:Text textAlign="left" height="31" text="Address"/>
+			<mx:PopUpMenuButton label="B" id="backButton" click="currentPageBack();"
+				labelField="@label" showRoot="false" itemClick="historyItemClick(event);"
+				open="historyMenuOpen(event);"/>
+			<mx:PopUpMenuButton label="F" id="forwardButton" click="currentPageForward();"
+				labelField="@label" showRoot="false"  itemClick="historyItemClick(event);"
+				open="historyMenuOpen(event);"/>
+			<mx:Button label="R" id="refreshButton" click="currentPageRefresh();"/>
+			<mx:Button label="S" id="stopButton" click="currentPageStop();"/>
+			<mx:Button label="H" id="homeButton" click="currentPageHome();"/>
 			<mx:TextInput width="100%" height="25" id="addressInput" enter="changeTabURLinFocus(addressInput.text);"/>
 			<mx:Button label="Go" width="42" height="24" click="changeTabURLinFocus(addressInput.text);"/>
 		</mx:HBox>
