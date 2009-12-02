@@ -47,9 +47,16 @@
     private static const stopIcon:Class;
     [Embed(source="icons/icon_home.gif")]
     private static const homeIcon:Class;
+    [Embed(source="icons/action_go.gif")]
+    private static const goIcon:Class;
 
 	private var xmlToShare:XML;
-	// functino to handle all context menu evevnts
+
+	private function randNum():Number
+	{
+		return Math.floor(Math.random() * (100000));		
+	}
+
     public function setupDragClipboardForTree(e:NativeDragEvent):void
     {
     	var htmlString:String = "";
@@ -348,7 +355,7 @@
 			var newContextXML:XML = <context active="true" label="Default"><tabs label="Tabs"/></context>; 
 			contexts.appendChild(newContextXML);
     		var defaultContext:Context = addContext("Default", newContextXML);
-    		var newTabXML:XML =new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" />") 
+    		var newTabXML:XML =new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" id=\"" + randNum().toString() +"\" />") 
     		newContextXML.tabs[0].appendChild(newTabXML);
     		addTab(newTabXML, defaultContext.navigator);
         } else
@@ -514,7 +521,7 @@
         contexts.appendChild(newContextXML);
 		var newContext:Context = addContext("New Group", newContextXML);
 		
-		var newTabXML:XML =new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" />");
+		var newTabXML:XML =new XML("<tab label=\"" + homepage + "\" address=\"" + homepage + "\" id=\"" + randNum().toString() +"\" />");
         newContextXML.tabs[0].appendChild(newTabXML);
         addTab(newTabXML, newContext.navigator);
 		
@@ -537,7 +544,7 @@
 	
 	public function addBookmarkToContext(context:Context, label:String, address:String): void
 	{
-		var newBookmarkXML:XML = new XML("<bookmark label=\"" + label + "\" address=\"" + address + "\" />"); 
+		var newBookmarkXML:XML = new XML("<bookmark label=\"" + label + "\" address=\"" + address + "\" id=\"" + randNum().toString() +"\" />"); 
 		
 		if(context.xmlRef.bookmarks.length() == 0)
 			context.xmlRef.appendChild(new XML("<bookmarks label=\"Bookmarks\"/>"));
@@ -546,7 +553,7 @@
 	
 	public function addNewTabToContext(context:Context, address:String):void
 	{
-		var newTabXML:XML = new XML("<tab label=\"" + address + "\" address=\"" + address + "\" />"); 
+		var newTabXML:XML = new XML("<tab label=\"" + address + "\" address=\"" + address + "\" id=\"" + randNum().toString() +"\" />"); 
         context.xmlRef.tabs.appendChild(newTabXML);
 
 		addTab(newTabXML, getCurrentTabNavigator());
@@ -659,7 +666,7 @@
 	{
 		if(xmlObj==null)
 		{
-			xmlObj = new XML("<tab label=\"(untitled)\" address=\"" + homepage + "\" />");
+			xmlObj = new XML("<tab label=\"(untitled)\" address=\"" + homepage + "\" id=\"" + randNum().toString() +"\" />");
 		}
 		
 		var tab:Tab = new Tab();
@@ -859,7 +866,7 @@
 ]]>
 </mx:Script>
 
-	<mx:VBox x="9" y="9" width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+	<mx:VBox paddingTop="10" paddingRight="10" paddingBottom="10" paddingLeft="10" width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 		<mx:HBox width="100%" height="25" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 			<mx:Button label="Load Context" id="loadButton" click="downloadContext();"/>
 			<mx:PopUpMenuButton icon="{backIcon}" id="backButton" click="currentPageBack();"
@@ -873,7 +880,7 @@
 			<mx:Button icon="{stopIcon}" id="stopButton" click="currentPageStop();" width="25"/>
 			<mx:Button icon="{homeIcon}" id="homeButton" click="currentPageHome();" width="25"/>
 			<mx:TextInput width="100%" height="25" id="addressInput" enter="changeTabURLinFocus(addressInput.text);"/>
-			<mx:Button label="Go" width="42" height="24" click="changeTabURLinFocus(addressInput.text);"/>
+			<mx:Button icon="{goIcon}" width="25" click="changeTabURLinFocus(addressInput.text);"/>
 		</mx:HBox>
 		<mx:HDividedBox width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 			<mx:VDividedBox id="sidebar" width="150" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
