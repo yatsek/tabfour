@@ -122,7 +122,7 @@ package flexlib.controls.tabBarClasses
 			
 			if( type == SuperTabNavigator.CONTEXT )
 			{
-				itemArray = new Array("Add Context", "Rename Context", "Hibernate Context", "Delete Context");
+				itemArray = new Array("Add Context", "Rename Context", "Share Context", "Hibernate Context", "Delete Context");
 			}
 			else if ( type == SuperTabNavigator.TAB ) 
 			{

@@ -6,6 +6,8 @@
 	horizontalScrollPolicy="off" verticalScrollPolicy="off">
 <mx:Script>
 <![CDATA[
+	import mx.managers.PopUpManager;
+    import mx.containers.TitleWindow;
 	import mx.utils.URLUtil;
 	import flexlib.events.*;
 	import mx.events.FlexEvent;
@@ -15,6 +17,7 @@
 	import mx.containers.*;
 	import mx.controls.Label;
 	import mx.controls.HTML;
+	import mx.controls.Text;
 	import flexlib.controls.tabBarClasses.SuperTab;
 	import mx.events.ListEvent;
 	import flexlib.controls.CustomTreeItemRenderer;
@@ -33,10 +36,10 @@
 	[Embed(source="./flexlib/assets/home.png")]
 	private var home_icon:Class;
 
+	private var xmlToShare:XML;
 	// functino to handle all context menu evevnts
 	public function contextMenuEventHandler(e:RightClickMenuEvent): void
 	{
-		trace(e.target.toString());
 		trace(e.clickedItem);
 		// right click menu handler
 		switch(e.clickedItem)
@@ -63,10 +66,71 @@
 				break;
 			case "Delete Tab":
 				break;
+			case "Share Context":
+				var filePopup:ShareFileWindow=ShareFileWindow(PopUpManager.createPopUp( this, ShareFileWindow , true));
+             	PopUpManager.centerPopUp(filePopup);
+                filePopup.handler = shareContext;
+				
+				// context xml to be shared
+				var contextIndex:Number = contextTabBar.getTabBar().getChildIndex(e.clickedTab);
+				xmlToShare = Context(contextTabBar.getChildAt(contextIndex)).xmlRef;
+				break;
 		}
 		
 	}
 	
+	public function downloadContext():void
+	{
+		var filePopup:ShareFileWindow=ShareFileWindow(PopUpManager.createPopUp( this, ShareFileWindow , true));
+     	PopUpManager.centerPopUp(filePopup);
+        filePopup.handler = addXMLToContext;
+        return;
+	}
+	
+	public function addXMLToContext(fileName:String):void
+	{
+		var xmlURL:URLRequest = new URLRequest();
+		xmlURL.url = ("http://www.shiufai.net/cs544/" + fileName);
+		var xmlLoader:URLLoader = new URLLoader();
+		xmlLoader.addEventListener(IOErrorEvent.IO_ERROR, function(){});
+		xmlLoader.addEventListener(Event.COMPLETE, downloadCompleteHandler);
+		try 
+		{
+			xmlLoader.load(xmlURL);
+		} catch (e:Error) {}
+	}
+	
+	private function downloadCompleteHandler(event:Event):void
+	{
+		contexts.appendChild(XML(event.target.data));
+		activateContextAndTab(contexts.children()[contexts.children().length()-1]);
+		treeInactive.dataProvider=contexts.context.(@active == 'false');
+		treeActive.dataProvider=contexts.context.(@active == 'true');
+		trace(event.target.data);
+	}
+	
+	public function shareContext(fileName:String):void
+	{
+		var file:File = new File(File.applicationDirectory.nativePath.toString() + "/" + fileName);
+        var fileStream:FileStream = new FileStream();
+        fileStream.open(file, FileMode.WRITE);
+        fileStream.writeUTFBytes(xmlToShare.toXMLString());
+        fileStream.close();
+        		
+		var urlRequest:URLRequest = new URLRequest("http://www.shiufai.net/cs544/upload.php");
+		file.addEventListener(DataEvent.UPLOAD_COMPLETE_DATA, uploadCompleteHandler);
+		file.addEventListener(Event.COMPLETE, uploadCompleteHandler);
+		file.upload(urlRequest);
+		trace(xmlToShare.toString());
+	}
+	
+	private function uploadCompleteHandler(event:Event):void 
+	{
+		trace( "File Uploaded: " + event.target.name);
+		var file:File = new File(File.applicationDirectory.nativePath.toString() + "/" + event.target.name);
+		file.deleteFile();
+	}
+		
 	public function sideBarMenuHandler(e:SideBarMenuEvent):void
 	{
 		switch(e.type)
@@ -111,6 +175,9 @@
    				searchAndDeleteXML(e.xmlObject);
 				break;
 		}
+		
+		treeInactive.dataProvider=contexts.context.(@active == 'false');
+		treeActive.dataProvider=contexts.context.(@active == 'true');
 	}
 	
 	public function searchAndDeleteXML(xmlToDelete:XML):void
@@ -160,10 +227,17 @@
 	{
 		var file:File = File.applicationDirectory.resolvePath(contextFilename);
         var fileStream:FileStream = new FileStream();
-        fileStream.open(file, FileMode.READ);
-        var stringRead:String = fileStream.readUTFBytes(fileStream.bytesAvailable);
-        contexts = XML(stringRead);
-        fileStream.close();
+        if( file.exists )
+        {
+	        fileStream.open(file, FileMode.READ);
+	        var stringRead:String = fileStream.readUTFBytes(fileStream.bytesAvailable);
+	        contexts = XML(stringRead);
+	        fileStream.close();
+        }
+        else 
+        {
+        	contexts = new XML("<contexts />");
+        }        
 	}
 	
 	public function saveContexts():void
@@ -173,8 +247,8 @@
         fileStream.open(file, FileMode.WRITE);
         fileStream.writeUTFBytes(contexts.toXMLString());
         fileStream.close();
-	}
-	
+ 	}
+ 
 	public function initContexts():void
 	{
 		var activeContexts:XMLList = contexts.context.(@active == 'true');
@@ -357,6 +431,7 @@
 		contextTabBar.selectedIndex = contextTabBar.numChildren-1;
 		
 		treeInactive.dataProvider=contexts.context.(@active == 'false');
+		treeActive.dataProvider=contexts.context.(@active == 'true');
 	}
 	
 	public function getCurrentTabNavigator():SuperTabNavigator
@@ -689,6 +764,7 @@
 
 	<mx:VBox x="9" y="9" width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 		<mx:HBox width="100%" height="25" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+			<mx:Button label="Load Context" id="loadButton" click="downloadContext();"/>
 			<mx:PopUpMenuButton label="B" id="backButton" click="currentPageBack();"
 				labelField="@label" showRoot="false" itemClick="historyItemClick(event);"
 				open="historyMenuOpen(event);"/>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+    title="File Name" x="168" y="86" status="active" showCloseButton="true" close="PopUpManager.removePopUp(this);" borderAlpha="1.0">
+
+    <mx:Script>
+        <![CDATA[       
+            import mx.managers.PopUpManager;
+            import mx.controls.Text;
+           
+            // A reference to the TextInput control in which to put the result.
+            public var file:Text;
+            public var handler:Function;
+           
+            // Event handler for the OK button.
+            private function returnName():void {
+                PopUpManager.removePopUp(this);
+                
+                handler(fileName.text);
+            }
+        ]]>
+    </mx:Script>
+
+    <mx:HBox>
+        <mx:Label text="File Name: "/>
+        <mx:TextInput id="fileName" width="100%"/>
+    </mx:HBox>
+
+    <mx:HBox>
+        <mx:Button label="OK" click="returnName();"/>
+        <mx:Button label="Cancel" click="PopUpManager.removePopUp(this);"/>
+    </mx:HBox>
+
+</mx:TitleWindow>
