@@ -4,10 +4,12 @@
 	percentWidth="100" percentHeight="100">
 <mx:Script>
 	<![CDATA[
+		import flexlib.controls.tabBarClasses.SuperTab;
 		public var xmlRef:XML;
 		public var addressToOpen:String;
 	]]>
 </mx:Script>
 	
-	<flexlib:SuperTabNavigator id="navigator" percentWidth="100" percentHeight="100"/>
+	<flexlib:SuperTabNavigator id="navigator" percentWidth="100" percentHeight="100" 
+		stopScrollingEvent="{MouseEvent.MOUSE_OUT}" startScrollingEvent="{MouseEvent.MOUSE_OVER}" closePolicy="{SuperTab.CLOSE_ALWAYS}"/>
 </mx:VBox>
