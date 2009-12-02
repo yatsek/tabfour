@@ -38,6 +38,79 @@
 
 	private var xmlToShare:XML;
 	// functino to handle all context menu evevnts
+    public function setupDragClipboardForTree(e:NativeDragEvent):void
+    {
+    	var htmlString:String = "";
+    	var textString:String = "";
+    	var selectedNode:XML = e.currentTarget.selectedItem;
+    	if(selectedNode.localName() == "context")
+    	{
+    		htmlString += "<h3>" + "Context Name: " + selectedNode.@label + "</h3>";
+    		textString += "Context Name: " + selectedNode.@label + "\n\n";
+	    	
+	    	htmlString += "<h3>" + "Tabs: " + "</h3>";
+            textString += "Tabs: " + "\n";
+	    	
+	    	var tabs:XMLList = selectedNode.tabs.tab;
+	    	if(tabs.length() == 0)
+	    	{
+	    		htmlString += "(None)" + "<br>";
+                textString += "\t" + "(None)" + "\n";
+	    	} else
+	    	{
+		    	for each(var tab:XML in tabs)
+		    	{
+		    		htmlString += "\t" + tab.@label+ ": <a href=\"" + tab.@address + "\">" + tab.@address + "</a><br>";
+		    		textString += "\t" + tab.@label + ": " + tab.@address + "\n";
+		    	}
+		    }
+	    	
+	    	htmlString += "<br>" + "<h3>" + "Bookmarks: " + "</h3>";
+            textString += "\n"   + "Bookmarks: " + "\n";
+            
+            var bookmarks:XMLList = selectedNode.bookmarks.bookmark;
+            if(bookmarks.length() == 0)
+            {
+                htmlString += "(None)" + "<br>";
+                textString += "\t" + "(None)" + "\n";
+            } else
+            {
+	            for each(var bookmark:XML in bookmarks)
+	            {
+	                htmlString += "\t" + bookmark.@label+ ": <a href=\"" + bookmark.@address + "\">" + bookmark.@address + "</a><br><br>";
+	                textString += "\t" + bookmark.@label + ": " + bookmark.@address + "\n\n";
+	            }
+	        }
+	    } else if(selectedNode.localName() == "tabs")
+	    {
+	    	htmlString += "<h3>" + "Tabs: " + "</h3>";
+            textString += "Tabs: " + "\n";
+	    	
+	        tabs = selectedNode.tab;
+            if(tabs.length() == 0)
+            {
+                htmlString += "(None)" + "<br>";
+                textString += "\t" + "(None)" + "\n";
+            } else
+            {
+                for each(tab in tabs)
+                {
+                    htmlString += "\t" + tab.@label+ ": <a href=\"" + tab.@address + "\">" + tab.@address + "</a><br>";
+                    textString += "\t" + tab.@label + ": " + tab.@address + "\n";
+                }
+            }
+	    } else if(selectedNode.localName() == "tab")
+	    {
+	    	tab = selectedNode;
+	    	htmlString += "\t" + tab.@label+ ": <a href=\"" + tab.@address + "\">" + tab.@address + "</a><br>";
+            textString += "\t" + tab.@label + ": " + tab.@address + "\n";
+	    }
+
+        e.clipboard.setData(ClipboardFormats.HTML_FORMAT, htmlString);
+        e.clipboard.setData(ClipboardFormats.TEXT_FORMAT, textString);
+    }    
+    
+	// function to handle all context menu events
 	public function contextMenuEventHandler(e:RightClickMenuEvent): void
 	{
 		trace(e.clickedItem);
@@ -792,7 +865,9 @@
 							mouseOut="listMouseOut(event)"
 							mouseMove="listMouseMove(event)"
 							itemRenderer="flexlib.controls.CustomTreeItemRenderer"
-							/>					
+							dragEnabled="true"
+							nativeDragStart="setupDragClipboardForTree(event);"
+							/>
 					</mx:Canvas>
 				</mx:Accordion>
 				<mx:Accordion width="100%" height="100%" >
@@ -808,6 +883,7 @@
 							mouseOut="listMouseOut(event)"
 							mouseMove="listMouseMove(event)"
 							itemRenderer="flexlib.controls.CustomTreeItemRenderer"
+							nativeDragStart="setupDragClipboardForTree(event);"
 	                        />
 					</mx:Canvas>
 				</mx:Accordion>
