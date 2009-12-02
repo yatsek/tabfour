@@ -549,6 +549,9 @@
 		if(context.xmlRef.bookmarks.length() == 0)
 			context.xmlRef.appendChild(new XML("<bookmarks label=\"Bookmarks\"/>"));
         context.xmlRef.bookmarks[0].appendChild(newBookmarkXML);
+        
+		treeInactive.dataProvider=contexts.context.(@active == 'false');
+		treeActive.dataProvider=contexts.context.(@active == 'true'); 
 	}
 	
 	public function addNewTabToContext(context:Context, address:String):void
