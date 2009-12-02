@@ -26,10 +26,11 @@
 	public var contexts:XML;
 	public var homepage:String = "http://www.google.ca";
 	public var contextFilename:String = "test.xml";
-	public var currentListIndex:int = -1;
 	
+	private var lastListIndex:int = -1;
+	private var currentListIndex:int = -1;
+	private var floatPanelCommentXML:XML;
 	private var floatPanelTimer:Timer;
-	
 	
 	
 	[Embed(source="./flexlib/assets/document.png")]
@@ -125,6 +126,7 @@
 	public function contextMenuEventHandler(e:RightClickMenuEvent): void
 	{
 		trace(e.clickedItem);
+		var contextIndex:Number;
 		// right click menu handler
 		switch(e.clickedItem)
 		{
@@ -147,7 +149,7 @@
 				addBookmarkToContext(Context(contextTabBar.selectedChild), e.clickedTab.label, tabAddress);
 				break;	
 			case "Delete Context":
-				var contextIndex:Number = contextTabBar.getTabBar().getChildIndex(e.clickedTab);
+				contextIndex = contextTabBar.getTabBar().getChildIndex(e.clickedTab);
 				var xmlToDelete:XML = Context(contextTabBar.getChildAt(contextIndex)).xmlRef;
 				
 				e.clickedTab.dispatchEvent(new Event(SuperTab.CLOSE_TAB_EVENT));
@@ -159,7 +161,7 @@
                 filePopup.handler = shareContext;
 				
 				// context xml to be shared
-				var contextIndex:Number = contextTabBar.getTabBar().getChildIndex(e.clickedTab);
+				contextIndex = contextTabBar.getTabBar().getChildIndex(e.clickedTab);
 				xmlToShare = Context(contextTabBar.getChildAt(contextIndex)).xmlRef;
 				break;
 		}
@@ -733,6 +735,7 @@
 		
 		floatPanel.title = xml.@label + " (" + count + ")";
 		
+		floatPanelCommentXML = xml;
 		textComment.data = xml.@comment;
 		
 		var axml:XML = xml;
@@ -747,15 +750,18 @@
 
 	}
 
-	public function listItemRollOut(event:Event):void 
+	public function listItemRollOut(event:Event):void
 	{
 		if (event.type != mx.events.ListEvent.ITEM_ROLL_OUT) return;
-		currentListIndex = -1;
-		
-		floatPanelTimer.stop();
-		floatPanelTimer.start();
-		
-		
+		removeFloatPanel();
+    }
+
+    public function removeFloatPanel():void
+    {
+    	lastListIndex = currentListIndex;
+        currentListIndex = -1;      
+        floatPanelTimer.stop();
+        floatPanelTimer.start();
     }
 	 
 	/*
@@ -850,8 +856,6 @@
 	/*
 	 * end : control toolbar functions
 	 */
-	
-	
 ]]>
 </mx:Script>
 
@@ -919,12 +923,14 @@
 	<mx:Fade id="showFade" alphaFrom="0" alphaTo="1" duration="200"/>
 	<mx:Fade id="hideFade" alphaFrom="1" alphaTo="0"  duration="200"/>
 	<mx:Panel id="floatPanel" x="73" y="-13"  visible="false" width="300" height="300" layout="absolute"
-		showEffect="{showFade}" hideEffect="{hideFade}"  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+		showEffect="{showFade}" hideEffect="{hideFade}"  horizontalScrollPolicy="off" verticalScrollPolicy="off"
+		rollOver="currentListIndex = lastListIndex;" rollOut="removeFloatPanel();">
 		
 		<mx:VBox id="floatPanelBox" width="100%" height="100%" >
 			<mx:HTML id="htmlPreviewPane" width="100%" height="74%" 
 				scaleX="0.25" scaleY="0.25"/>
-			<mx:TextArea id="textComment" width="100%" height="25%" editable="false" borderThickness="0" />
+			<mx:TextArea id="textComment" width="100%" height="25%" editable="true" borderThickness="0" 
+				change="floatPanelCommentXML.@comment = textComment.text;"/>
 		</mx:VBox>
 
 	</mx:Panel>
