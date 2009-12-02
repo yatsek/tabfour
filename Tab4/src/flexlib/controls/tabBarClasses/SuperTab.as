@@ -126,7 +126,7 @@ package flexlib.controls.tabBarClasses
 			}
 			else if ( type == SuperTabNavigator.TAB ) 
 			{
-				itemArray = new Array("Add Tab", "Bookmark Tab", "Hibernate Tab", "Delete Tab");
+				itemArray = new Array("Add Tab", "Bookmark Tab", "Close Tab");
 			}
 			
 			var customContextMenu:ContextMenu = new ContextMenu();

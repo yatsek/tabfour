@@ -23,7 +23,8 @@ package flexlib.controls {
 			edit.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, rightClickHandler);  
 			menuItems.push(edit);  
 			contextMenu.customItems = menuItems;  
-			this.contextMenu = contextMenu;  
+			
+			//this.contextMenu = contextMenu;  
 		}  
 		
 		/*
