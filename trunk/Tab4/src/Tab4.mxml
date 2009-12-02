@@ -30,11 +30,22 @@
 	
 	private var floatPanelTimer:Timer;
 	
-	[Embed(source="./flexlib/assets/document.png")]
-	private var document_icon:Class;
 	
+	
+	[Embed(source="./flexlib/assets/document.png")]
+	private static const document_icon:Class;
 	[Embed(source="./flexlib/assets/home.png")]
-	private var home_icon:Class;
+	private static const home_icon:Class;
+	[Embed(source="icons/action_back.gif")]
+    private static const backIcon:Class; 
+    [Embed(source="icons/action_forward.gif")]
+    private static const forwardIcon:Class; 
+    [Embed(source="icons/action_refresh.gif")]
+    private static const refreshIcon:Class; 
+    [Embed(source="icons/action_stop.gif")]
+    private static const stopIcon:Class;
+    [Embed(source="icons/icon_home.gif")]
+    private static const homeIcon:Class;
 
 	private var xmlToShare:XML;
 	// functino to handle all context menu evevnts
@@ -168,7 +179,7 @@
 		var xmlURL:URLRequest = new URLRequest();
 		xmlURL.url = ("http://www.shiufai.net/cs544/" + fileName);
 		var xmlLoader:URLLoader = new URLLoader();
-		xmlLoader.addEventListener(IOErrorEvent.IO_ERROR, function(){});
+		xmlLoader.addEventListener(IOErrorEvent.IO_ERROR, function():void{});
 		xmlLoader.addEventListener(Event.COMPLETE, downloadCompleteHandler);
 		try 
 		{
@@ -561,6 +572,7 @@
 		if(currentTab != null)
 		{
 		  addressInput.text = currentTab.htmlPane.location;
+		  currentTab.xmlObject.@address = currentTab.htmlPane.location; 
 		}
 	}
 	
@@ -846,15 +858,16 @@
 	<mx:VBox x="9" y="9" width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 		<mx:HBox width="100%" height="25" horizontalScrollPolicy="off" verticalScrollPolicy="off">
 			<mx:Button label="Load Context" id="loadButton" click="downloadContext();"/>
-			<mx:PopUpMenuButton label="B" id="backButton" click="currentPageBack();"
+			<mx:PopUpMenuButton icon="{backIcon}" id="backButton" click="currentPageBack();"
 				labelField="@label" showRoot="false" itemClick="historyItemClick(event);"
-				open="historyMenuOpen(event);"/>
-			<mx:PopUpMenuButton label="F" id="forwardButton" click="currentPageForward();"
+				open="historyMenuOpen(event);" width="42"/>
+			<mx:PopUpMenuButton icon="{forwardIcon}" id="forwardButton" click="currentPageForward();"
 				labelField="@label" showRoot="false"  itemClick="historyItemClick(event);"
-				open="historyMenuOpen(event);"/>
-			<mx:Button label="R" id="refreshButton" click="currentPageRefresh();"/>
-			<mx:Button label="S" id="stopButton" click="currentPageStop();"/>
-			<mx:Button label="H" id="homeButton" click="currentPageHome();"/>
+				open="historyMenuOpen(event);" width="42"/>
+			
+			<mx:Button icon="{refreshIcon}" id="refreshButton" click="currentPageRefresh();" width="25"/>
+			<mx:Button icon="{stopIcon}" id="stopButton" click="currentPageStop();" width="25"/>
+			<mx:Button icon="{homeIcon}" id="homeButton" click="currentPageHome();" width="25"/>
 			<mx:TextInput width="100%" height="25" id="addressInput" enter="changeTabURLinFocus(addressInput.text);"/>
 			<mx:Button label="Go" width="42" height="24" click="changeTabURLinFocus(addressInput.text);"/>
 		</mx:HBox>
