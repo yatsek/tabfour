@@ -127,7 +127,7 @@
 				e.clickedTab.editableLabel= true;
 				break;
 			case "Hibernate Context":
-			case "Hibernate Tab":
+			case "Close Tab":
 				e.clickedTab.dispatchEvent(new Event(SuperTab.CLOSE_TAB_EVENT));
 				break;
 			case "Bookmark Tab":
@@ -136,8 +136,11 @@
 				addBookmarkToContext(Context(contextTabBar.selectedChild), e.clickedTab.label, tabAddress);
 				break;	
 			case "Delete Context":
-				break;
-			case "Delete Tab":
+				var contextIndex:Number = contextTabBar.getTabBar().getChildIndex(e.clickedTab);
+				var xmlToDelete:XML = Context(contextTabBar.getChildAt(contextIndex)).xmlRef;
+				
+				e.clickedTab.dispatchEvent(new Event(SuperTab.CLOSE_TAB_EVENT));
+				searchAndDeleteXML(xmlToDelete);
 				break;
 			case "Share Context":
 				var filePopup:ShareFileWindow=ShareFileWindow(PopUpManager.createPopUp( this, ShareFileWindow , true));
@@ -248,9 +251,6 @@
    				searchAndDeleteXML(e.xmlObject);
 				break;
 		}
-		
-		treeInactive.dataProvider=contexts.context.(@active == 'false');
-		treeActive.dataProvider=contexts.context.(@active == 'true');
 	}
 	
 	public function searchAndDeleteXML(xmlToDelete:XML):void
@@ -262,9 +262,12 @@
 			if ( cn[i] == xmlToDelete )
 			{
        			delete cn[i];   
-       			return;
+       			break;
 			}
-		}    		
+		}
+		
+		treeInactive.dataProvider=contexts.context.(@active == 'false');
+		treeActive.dataProvider=contexts.context.(@active == 'true');    		
 	}
 	
 	public function init():void
@@ -272,6 +275,8 @@
 		//save before exiting
 		NativeApplication.nativeApplication.addEventListener(Event.EXITING, applicationExitHandler);
 		
+		contextTabBar.dragEnabled = false;
+		contextTabBar.dropEnabled = false;
 		contextTabBar.setType(SuperTabNavigator.CONTEXT, contextMenuEventHandler);
 		contextTabBar.addEventListener(SuperTabNavigator.AddTabEvent, addContextWithTabBarButton);
 		contextTabBar.addEventListener(IndexChangedEvent.CHANGE, updateAddressBar);
@@ -520,7 +525,10 @@
 	public function addBookmarkToContext(context:Context, label:String, address:String): void
 	{
 		var newBookmarkXML:XML = new XML("<bookmark label=\"" + label + "\" address=\"" + address + "\" />"); 
-        context.xmlRef.bookmarks.appendChild(newBookmarkXML);
+		
+		if(context.xmlRef.bookmarks.length() == 0)
+			context.xmlRef.appendChild(new XML("<bookmarks label=\"Bookmarks\"/>"));
+        context.xmlRef.bookmarks[0].appendChild(newBookmarkXML);
 	}
 	
 	public function addNewTabToContext(context:Context, address:String):void
