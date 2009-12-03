@@ -26,6 +26,11 @@
 	public var contexts:XML;
 	public var homepage:String = "http://www.google.ca";
 	public var contextFilename:String = "test.xml";
+	public var currentListPos:int = -1;
+	public var onPanel:Boolean = false;
+	public var currentListData:XML = null;
+	public var previousListData:XML = null;
+	public var tempListData:XML = null;
 	
 	private var lastListIndex:int = -1;
 	private var currentListIndex:int = -1;
@@ -702,13 +707,46 @@
 	public function listMouseMove(event:Event):void
 	{
 		if (event.type != flash.events.MouseEvent.MOUSE_MOVE) return;
-		floatPanel.move(sidebar.x + sidebar.width, flash.events.MouseEvent(event).stageY);
+		currentListPos = flash.events.MouseEvent(event).stageY - 10;
 			
 	}
 	
 	public function floatPanelTimerTimeout(event:TimerEvent):void
 	{
-		floatPanel.visible = currentListIndex >=0;
+		floatPanel.visible = currentListIndex >=0 || onPanel;
+		
+		if (tempListData != null) currentListData = tempListData;
+
+		if (currentListIndex >=0 && Math.abs(currentListPos - floatPanel.y)>10)
+			floatPanel.move(sidebar.x + sidebar.width, currentListPos);
+			
+		if (currentListData != null && currentListData != previousListData)
+		{
+			var xml:XML = currentListData;
+			
+			var count:int = 1;
+			if (xml.localName()=="context")
+				count = xml.tabs.children().length();
+			else if (xml.localName()=="tabs")
+				count = xml.children().length();
+			else if (xml.localName()=="bookmarks")
+				count = xml.children().length();
+			else
+				count = 1;
+			
+			floatPanel.title = xml.@label + " (" + count + ")";
+			
+			textComment.data = xml.@comment;
+			
+			var axml:XML = xml;
+				
+			while (axml.attribute("address").length() == 0 && axml.children().length() > 0)
+				axml = axml.children()[0];
+				
+			htmlPreviewPane.location = axml.@address;
+			previousListData = currentListData;
+		}
+
 	}
 		
 	public function listMouseOver(event:Event):void
@@ -732,47 +770,31 @@
 		currentListIndex = event.rowIndex;
 		
 		var xml:XML = XML(event.itemRenderer.data);
+		tempListData = xml;
 		
-		var count:int = 1;
-		if (xml.localName()=="context")
-			count = xml.tabs.children().length();
-		else if (xml.localName()=="tabs")
-			count = xml.children().length();
-		else if (xml.localName()=="bookmarks")
-			count = xml.children().length();
-		else
-			count = 1;
-		
-		floatPanel.title = xml.@label + " (" + count + ")";
-		
-		floatPanelCommentXML = xml;
-		textComment.data = xml.@comment;
-		
-		var axml:XML = xml;
-			
-		while (axml.attribute("address").length() == 0 && axml.children().length() > 0)
-			axml = axml.children()[0];
-			
-		htmlPreviewPane.location = axml.@address;
 			
 		floatPanelTimer.stop();
 		floatPanelTimer.start();
-
+		
 	}
 
 	public function listItemRollOut(event:Event):void
 	{
 		if (event.type != mx.events.ListEvent.ITEM_ROLL_OUT) return;
-		removeFloatPanel();
+		currentListIndex = -1;
+		tempListData = null;
+		
+		floatPanelTimer.stop();
+		floatPanelTimer.start();
+				
+    }
+    
+    public function commentChanged():void
+    {
+    	if (currentListData!=null && floatPanel.visible)
+    		currentListData.@comment = textComment.text;
     }
 
-    public function removeFloatPanel():void
-    {
-    	lastListIndex = currentListIndex;
-        currentListIndex = -1;      
-        floatPanelTimer.stop();
-        floatPanelTimer.start();
-    }
 	 
 	/*
 	 * end : quick info panel
@@ -932,15 +954,16 @@
 	
 	<mx:Fade id="showFade" alphaFrom="0" alphaTo="1" duration="200"/>
 	<mx:Fade id="hideFade" alphaFrom="1" alphaTo="0"  duration="200"/>
+	<mx:Move id="moveTransit" />
 	<mx:Panel id="floatPanel" x="73" y="-13"  visible="false" width="300" height="300" layout="absolute"
 		showEffect="{showFade}" hideEffect="{hideFade}"  horizontalScrollPolicy="off" verticalScrollPolicy="off"
-		rollOver="currentListIndex = lastListIndex;" rollOut="removeFloatPanel();">
+		mouseOver="onPanel=true;" mouseOut="onPanel=false;" moveEffect="{moveTransit}"
+		>
 		
 		<mx:VBox id="floatPanelBox" width="100%" height="100%" >
 			<mx:HTML id="htmlPreviewPane" width="100%" height="74%" 
 				scaleX="0.25" scaleY="0.25"/>
-			<mx:TextArea id="textComment" width="100%" height="25%" editable="true" borderThickness="0" 
-				change="floatPanelCommentXML.@comment = textComment.text;"/>
+			<mx:TextArea id="textComment" width="100%" height="25%" editable="true" borderThickness="0" keyUp="commentChanged();"/>
 		</mx:VBox>
 
 	</mx:Panel>
