@@ -954,7 +954,7 @@
 			<flexlib:SuperTabNavigator id="contextTabBar" scrollSpeed="25" dropShadowEnabled="true"
 				stopScrollingEvent="{MouseEvent.MOUSE_OUT}" startScrollingEvent="{MouseEvent.MOUSE_OVER}"
 				width="100%" height="100%" horizontalGap="0" editableTabLabels="true"
-				closePolicy="{SuperTab.CLOSE_ALWAYS}"/>
+				closePolicy="{SuperTab.CLOSE_ALWAYS}" mouseMove="currentListIndex=-1; onPanel=false;"/>
 		</mx:HDividedBox>
 	</mx:VBox>
 	
