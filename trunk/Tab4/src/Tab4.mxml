@@ -212,7 +212,10 @@
 	
 	public function shareContext(fileName:String):void
 	{
-		var file:File = new File(File.applicationDirectory.nativePath.toString() + "/" + fileName);
+		var applicationDirectoryPath:File = File.applicationDirectory;
+		var nativePathToApplicationDirectory:String = applicationDirectoryPath.nativePath.toString();
+		nativePathToApplicationDirectory += "/" + fileName;
+		var file:File = new File(nativePathToApplicationDirectory);
         var fileStream:FileStream = new FileStream();
         fileStream.open(file, FileMode.WRITE);
         fileStream.writeUTFBytes(xmlToShare.toXMLString());
@@ -345,7 +348,10 @@
 	
 	public function saveContexts():void
 	{
-		var file:File = new File(File.applicationDirectory.nativePath.toString() + "/" + contextFilename);
+		var applicationDirectoryPath:File = File.applicationDirectory;
+		var nativePathToApplicationDirectory:String = applicationDirectoryPath.nativePath.toString();
+		nativePathToApplicationDirectory += "/" + contextFilename;
+		var file:File = new File(nativePathToApplicationDirectory);
         var fileStream:FileStream = new FileStream();
         fileStream.open(file, FileMode.WRITE);
         fileStream.writeUTFBytes(contexts.toXMLString());
