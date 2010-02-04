@@ -971,7 +971,5 @@
 				scaleX="0.25" scaleY="0.25"/>
 			<mx:TextArea id="textComment" width="100%" height="25%" editable="true" borderThickness="0" keyUp="commentChanged();"/>
 		</mx:VBox>
-
 	</mx:Panel>
-
 </mx:WindowedApplication>
